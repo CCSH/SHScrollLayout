@@ -1,27 +1,25 @@
 //
-//  ScrollLayoutExampleTests.m
-//  ScrollLayoutExampleTests
+//  SHScrollLayoutExampleTests.m
+//  SHScrollLayoutExampleTests
 //
-//  Created by CSH on 2018/9/15.
+//  Created by CSH on 2018/10/15.
 //  Copyright © 2018年 CSH. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface ScrollLayoutExampleTests : XCTestCase
+@interface SHScrollLayoutExampleTests : XCTestCase
 
 @end
 
-@implementation ScrollLayoutExampleTests
+@implementation SHScrollLayoutExampleTests
 
 - (void)setUp {
-    [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
 }
 
 - (void)testExample {

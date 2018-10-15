@@ -1,8 +1,8 @@
 //
 //  ViewController.h
-//  ScrollLayout
+//  SHScrollLayoutExample
 //
-//  Created by CSH on 2018/8/24.
+//  Created by CSH on 2018/10/15.
 //  Copyright © 2018年 CSH. All rights reserved.
 //
 

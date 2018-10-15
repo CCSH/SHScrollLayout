@@ -13,8 +13,6 @@
 #import "SHScrollView.h"
 #import "SHLabelPageView.h"
 
-#define kSHContentScrollTop @"SHContentScrollTop"
-
 #define kSHDevice_Width  [[UIScreen mainScreen] bounds].size.width  //主屏幕的宽度
 #define kSHDevice_Height [[UIScreen mainScreen] bounds].size.height //主屏幕的高度
 
@@ -67,7 +65,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
     self.head_h = 48;
     
-    NSMutableArray <UITableView *>*tableviews = [[NSMutableArray alloc]init];
+    NSMutableArray <UIScrollView *>*tableviews = [[NSMutableArray alloc]init];
     NSMutableArray <SHViewController *>*viewControllers = [[NSMutableArray alloc]init];
     
     for (int i = 0; i < 3; i++) {
@@ -119,7 +117,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-
+    
     if (section) {
         return self.pageView;
     }
@@ -160,7 +158,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
+    
     if ([scrollView isEqual:self.tableView]) {
         //处理整体滑动数据
         [self.tableView dealMainScrollData];
@@ -214,13 +212,13 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 }
 
 - (SHLabelPageView *)pageView{
-
+    
     if (!_pageView) {
-
+        
         NSArray *pageList = @[@"最新",@"热门",@"精华"];
-
+        
         _pageView = [SHLabelPageView shareSHLabelPageView];
-
+        
         _pageView.frame = CGRectMake(0, 0, self.tableView.width, self.head_h);
         _pageView.pageList = pageList;
         _pageView.type = SHLabelPageType_one;
@@ -228,10 +226,10 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         kSHWeak(self)
         //回调
         _pageView.pageViewBlock = ^(SHLabelPageView *pageView) {
-
+            
             weak_self.scrollView.currentIndex = pageView.index;
         };
-
+        
         _pageView.index = 1;
         //刷新界面
         [_pageView reloadView];
