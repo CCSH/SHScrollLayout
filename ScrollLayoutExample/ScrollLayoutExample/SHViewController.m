@@ -1,24 +1,24 @@
 //
-//  SHContentViewController.m
+//  SHViewController.m
 //  ScrollLayout
 //
 //  Created by CSH on 2018/9/7.
 //  Copyright © 2018年 CSH. All rights reserved.
 //
 
-#import "SHContentViewController.h"
+#import "SHViewController.h"
+#import "SHTableView.h"
 
-@interface SHContentViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface SHViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
 
-@implementation SHContentViewController
+@implementation SHViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,10 +28,11 @@
 
 - (UITableView *)tableView{
     if (!_tableView) {
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.tableFooterView = [UIView new];
         [self.view addSubview:_tableView];
     }
     return _tableView;
@@ -44,7 +45,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 30;
+    return arc4random()%30;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -61,18 +62,12 @@
     return cell;
 }
 
+#pragma mark - 主要方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
-    if (!self.canScroll) {
-        scrollView.contentOffset = CGPointZero;
-    }
-    
-    //子 tableview 到顶部了
-    if (scrollView.contentOffset.y <= 0) {
-        //到顶通知父视图改变状态
-        self.canScroll = NO;
-        scrollView.contentOffset = CGPointZero;
-        [[NSNotificationCenter defaultCenter] postNotificationName:self.topNot object:nil];
+     //处理内容滑动
+    if ([scrollView isEqual:self.tableView]) {
+        [self.mainTableView dealContentScrollDataWithScroll:self.tableView];
     }
 }
 

@@ -34,10 +34,10 @@
     _canScroll = canScroll;
     
     //主视图可以滚动则子视图不可滚动
-    for (SHViewController *obj in self.viewControllers) {
+    for (UIScrollView *obj in self.taleviews) {
         //如果主视图滑动，修改所有子vc的状态回到顶部
         if (canScroll) {
-            obj.tableView.contentOffset = CGPointZero;
+            obj.contentOffset = CGPointZero;
         }
     }
 }

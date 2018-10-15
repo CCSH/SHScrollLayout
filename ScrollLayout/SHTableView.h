@@ -7,22 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SHContentViewController.h"
 
-@interface SHTableView : UITableView <UIGestureRecognizerDelegate>
+@interface SHTableView : UITableView 
 
-//主视图是否可以滚动(内容视图与它相反)
-@property (nonatomic, assign) BOOL canScroll;
 //头部悬停位置
 @property (nonatomic, assign) CGFloat headPosition;
-//头部视图高度
-@property (nonatomic, assign) CGFloat head_h;
-//到达顶部通知
-@property (nonatomic, copy) NSString *topNot;
-//子视图集合
-@property (nonatomic, strong) NSMutableArray <SHContentViewController *>*viewControllers;
+//子视图集合(主要为了控制主视图可以滚动时 内容视图全部滚动到顶部)
+@property (nonatomic, strong) NSMutableArray <UIScrollView *>*taleviews;
 
-//处理滑动数据
-- (void)dealScrollData;
+//处理整体滑动数据(在整体滑动中 - (void)scrollViewDidScroll:(UIScrollView *)scrollView)
+- (void)dealMainScrollData;
+
+//处理内容滑动数据(在内容滑动中 - (void)scrollViewDidScroll:(UIScrollView *)scrollView)
+- (void)dealContentScrollDataWithScroll:(UIScrollView *)scroll;
 
 @end

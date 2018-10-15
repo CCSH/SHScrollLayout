@@ -10,21 +10,22 @@
 
 #define kSHContentScrollTop @"SHContentScrollTop"
 
+@interface SHTableView ()<UIGestureRecognizerDelegate>
+
+//主视图是否可以滚动(内容视图与它相反)
+@property (nonatomic, assign) BOOL canScroll;
+
+@end
+
 @implementation SHTableView
 
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style{
     self = [super initWithFrame:frame style:style];
     if (self) {
-        self.topNot = kSHContentScrollTop;
+        //默认主视图可以滚动
         self.canScroll = YES;
     }
     return self;
-}
-
-#pragma mark 多手势处理
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    
-    return YES;
 }
 
 #pragma mark - SET
@@ -33,30 +34,24 @@
     _canScroll = canScroll;
     
     //主视图可以滚动则子视图不可滚动
-    for (SHContentViewController *obj in self.viewControllers) {
-        obj.canScroll = !self.canScroll;
+    for (UIScrollView *obj in self.taleviews) {
         //如果主视图滑动，修改所有子vc的状态回到顶部
-        if (self.canScroll) {
-            obj.tableView.contentOffset = CGPointZero;
+        if (canScroll) {
+            obj.contentOffset = CGPointZero;
         }
     }
 }
 
-- (void)setTopNot:(NSString *)topNot{
-    _topNot = topNot;
+#pragma mark - 多手势处理
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeScrollStatus) name:topNot object:nil];
-}
-
-//改变主视图的状态
-- (void)changeScrollStatus{
-    self.canScroll = YES;
+    return YES;
 }
 
 #pragma mark - 处理滑动数据
-- (void)dealScrollData{
+- (void)dealMainScrollData{
     
+    //找到悬浮的位置
     CGFloat headOffset = [self rectForSection:1].origin.y - self.headPosition;
     
     if (self.contentOffset.y >= headOffset) {//达到了规定位置、父视图不可滚动
@@ -70,6 +65,21 @@
         if (!self.canScroll) {//父视图不允许滚动、手动设置位置
             self.contentOffset = CGPointMake(0, headOffset);
         }
+    }
+}
+
+#pragma mark - 处理内容滑动数据
+- (void)dealContentScrollDataWithScroll:(UIScrollView *)scroll{
+    
+    if (self.canScroll) {
+        scroll.contentOffset = CGPointZero;
+    }
+    
+    //子 tableview 到顶部了
+    if (scroll.contentOffset.y <= 0) {
+        //到顶通知父视图改变状态
+        self.canScroll = YES;
+        scroll.contentOffset = CGPointZero;
     }
 }
 

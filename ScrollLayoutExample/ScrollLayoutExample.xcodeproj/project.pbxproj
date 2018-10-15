@@ -172,6 +172,8 @@
 				5C52C05E214CE2EE000FBC96 /* AppDelegate.m */,
 				5C52C0D3214CE32F000FBC96 /* ViewController.h */,
 				5C52C0D4214CE34B000FBC96 /* ViewController.m */,
+				5C52C092214CE319000FBC96 /* SHViewController.h */,
+				5C52C091214CE319000FBC96 /* SHViewController.m */,
 				5C52C063214CE2EE000FBC96 /* Main.storyboard */,
 				5C52C066214CE2F0000FBC96 /* Assets.xcassets */,
 				5C52C068214CE2F0000FBC96 /* LaunchScreen.storyboard */,
@@ -204,8 +206,6 @@
 			children = (
 				5C52C090214CE319000FBC96 /* SHTableView.h */,
 				5C52C093214CE319000FBC96 /* SHTableView.m */,
-				5C52C092214CE319000FBC96 /* SHViewController.h */,
-				5C52C091214CE319000FBC96 /* SHViewController.m */,
 			);
 			path = ScrollLayout;
 			sourceTree = "<group>";
