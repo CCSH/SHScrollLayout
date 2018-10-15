@@ -10,8 +10,6 @@
 
 @interface SHScrollView : UIView
 
-//每张图片对应要显示的文字数组
-@property (nonatomic, strong) NSArray *titleArr;
 //内容Arr (http、path、view、image、vc)
 @property (nonatomic, copy) NSArray *contentArr;
 //默认图片

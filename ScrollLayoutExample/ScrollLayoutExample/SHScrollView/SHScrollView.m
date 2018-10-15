@@ -161,17 +161,19 @@ static NSString *cellId = @"SHScrollView";
     
     if ([obj isKindOfClass:[NSString class]]) {//字符串
         
-        if ([obj hasPrefix:@"http"]) {//网络图片
+        NSString *str = (NSString *)obj;
+        
+        if ([str hasPrefix:@"http"]) {//网络图片
             
-            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] placeholderImage:self.placeholderImage];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:self.placeholderImage];
         }else{
             
             //资源图片
-            UIImage *image = [UIImage imageNamed:obj];
+            UIImage *image = [UIImage imageNamed:str];
             
             if (!image) {//本地图片
                 
-                image = [UIImage imageWithContentsOfFile:obj];
+                image = [UIImage imageWithContentsOfFile:str];
             }
             if (!image) {//默认图片
                 
@@ -184,15 +186,17 @@ static NSString *cellId = @"SHScrollView";
         
     } else if ([obj isKindOfClass:[UIImage class]]) {//图片
         
-        UIImageView *imageView = [[UIImageView alloc]init];
-        imageView.frame = cell.contentView.bounds;
-        imageView.image = (UIImage *)obj;
+        UIImage *image = (UIImage *)obj;
+        imageView.image = image;
+        
         [cell.contentView addSubview:imageView];
+        
     } else if ([obj isKindOfClass:[UIViewController class]]) {//控制器
         
         UIViewController *vc = (UIViewController *)obj;
         vc.view.frame = cell.contentView.bounds;
         [cell.contentView addSubview:vc.view];
+        
     }else if ([obj isKindOfClass:[UIView class]]){//视图
         
         [cell.contentView addSubview:obj];

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "UIView+SHExtension.h"
 
 //标签页类型
 typedef enum : NSUInteger {
@@ -26,16 +27,26 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) SHLabelPageType type;
 //当前位置(默认是0)
 @property (nonatomic, assign) NSInteger index;
-//字体大小(默认是18)
+
+
+//标签字体大小(默认是18)
 @property (nonatomic, strong) UIFont *fontSize;
-//选中颜色(默认是黑色)
-@property (nonatomic, strong) UIColor *selectedColor;
-//当前选中下方颜色(默认是红)
+//标签选中颜色(默认是黑色)
+@property (nonatomic, strong) UIColor *checkColor;
+//标签未选中颜色(默认是黑色 0.3)
+@property (nonatomic, strong) UIColor *uncheckColor;
+
+//选中线的颜色(默认是红)
 @property (nonatomic, strong) UIColor *currentColor;
+//选中线的Y(默认距离视图下方 3)
+@property (nonatomic, assign) CGFloat currentY;
+
+//标签开始的X(默认 0)
+@property (nonatomic, assign) CGFloat startX;
+
 //偏移量(设置滑动中的效果)
 @property (nonatomic, assign) CGFloat contentOffsetX;
-//选中线的Y
-@property (nonatomic, assign) CGFloat currentY;
+
 //回调(标签点击回调)
 @property (nonatomic, copy) void(^pageViewBlock)(SHLabelPageView *pageView);
 

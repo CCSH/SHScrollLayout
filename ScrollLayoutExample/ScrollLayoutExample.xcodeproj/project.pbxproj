@@ -14,11 +14,9 @@
 		5C52C06D214CE2F0000FBC96 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C06C214CE2F0000FBC96 /* main.m */; };
 		5C52C077214CE2F0000FBC96 /* ScrollLayoutExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C076214CE2F0000FBC96 /* ScrollLayoutExampleTests.m */; };
 		5C52C082214CE2F0000FBC96 /* ScrollLayoutExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C081214CE2F0000FBC96 /* ScrollLayoutExampleUITests.m */; };
-		5C52C09D214CE31A000FBC96 /* SHContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C091214CE319000FBC96 /* SHContentViewController.m */; };
+		5C52C09D214CE31A000FBC96 /* SHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C091214CE319000FBC96 /* SHViewController.m */; };
 		5C52C09E214CE31A000FBC96 /* SHTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C093214CE319000FBC96 /* SHTableView.m */; };
 		5C52C09F214CE31A000FBC96 /* UIView+SHExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C095214CE319000FBC96 /* UIView+SHExtension.m */; };
-		5C52C0A0214CE31A000FBC96 /* SHLabelPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C099214CE319000FBC96 /* SHLabelPageView.m */; };
-		5C52C0A1214CE31A000FBC96 /* SHScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C09B214CE319000FBC96 /* SHScrollView.m */; };
 		5C52C0C3214CE322000FBC96 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5C52C0A3214CE322000FBC96 /* LICENSE */; };
 		5C52C0C4214CE322000FBC96 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5C52C0A4214CE322000FBC96 /* README.md */; };
 		5C52C0C5214CE322000FBC96 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C0A8214CE322000FBC96 /* SDWebImageManager.m */; };
@@ -36,6 +34,8 @@
 		5C52C0D1214CE322000FBC96 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C0BD214CE322000FBC96 /* UIView+WebCacheOperation.m */; };
 		5C52C0D2214CE322000FBC96 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C0C1214CE322000FBC96 /* UIButton+WebCache.m */; };
 		5C52C0D5214CE34B000FBC96 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C52C0D4214CE34B000FBC96 /* ViewController.m */; };
+		5CB37F222174332D00D8219E /* SHScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB37F202174332D00D8219E /* SHScrollView.m */; };
+		5CB37F26217433C500D8219E /* SHLabelPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB37F25217433C500D8219E /* SHLabelPageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,15 +71,11 @@
 		5C52C081214CE2F0000FBC96 /* ScrollLayoutExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollLayoutExampleUITests.m; sourceTree = "<group>"; };
 		5C52C083214CE2F0000FBC96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C52C090214CE319000FBC96 /* SHTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHTableView.h; sourceTree = "<group>"; };
-		5C52C091214CE319000FBC96 /* SHContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHContentViewController.m; sourceTree = "<group>"; };
-		5C52C092214CE319000FBC96 /* SHContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHContentViewController.h; sourceTree = "<group>"; };
+		5C52C091214CE319000FBC96 /* SHViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHViewController.m; sourceTree = "<group>"; };
+		5C52C092214CE319000FBC96 /* SHViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHViewController.h; sourceTree = "<group>"; };
 		5C52C093214CE319000FBC96 /* SHTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHTableView.m; sourceTree = "<group>"; };
 		5C52C095214CE319000FBC96 /* UIView+SHExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SHExtension.m"; sourceTree = "<group>"; };
 		5C52C096214CE319000FBC96 /* UIView+SHExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SHExtension.h"; sourceTree = "<group>"; };
-		5C52C098214CE319000FBC96 /* SHLabelPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHLabelPageView.h; sourceTree = "<group>"; };
-		5C52C099214CE319000FBC96 /* SHLabelPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHLabelPageView.m; sourceTree = "<group>"; };
-		5C52C09B214CE319000FBC96 /* SHScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHScrollView.m; sourceTree = "<group>"; };
-		5C52C09C214CE319000FBC96 /* SHScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHScrollView.h; sourceTree = "<group>"; };
 		5C52C0A3214CE322000FBC96 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		5C52C0A4214CE322000FBC96 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5C52C0A6214CE322000FBC96 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
@@ -113,6 +109,10 @@
 		5C52C0C2214CE322000FBC96 /* UIImage+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GIF.h"; sourceTree = "<group>"; };
 		5C52C0D3214CE32F000FBC96 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		5C52C0D4214CE34B000FBC96 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5CB37F202174332D00D8219E /* SHScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHScrollView.m; sourceTree = "<group>"; };
+		5CB37F212174332D00D8219E /* SHScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHScrollView.h; sourceTree = "<group>"; };
+		5CB37F24217433C500D8219E /* SHLabelPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHLabelPageView.h; sourceTree = "<group>"; };
+		5CB37F25217433C500D8219E /* SHLabelPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHLabelPageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,11 +163,11 @@
 		5C52C05C214CE2EE000FBC96 /* ScrollLayoutExample */ = {
 			isa = PBXGroup;
 			children = (
+				5CB37F23217433C500D8219E /* SHLabelPageView */,
+				5CB37F1F2174332D00D8219E /* SHScrollView */,
+				5C52C094214CE319000FBC96 /* UIView+SHExtension */,
 				5C52C0A2214CE322000FBC96 /* SDWebImage */,
 				5C52C08F214CE319000FBC96 /* ScrollLayout */,
-				5C52C097214CE319000FBC96 /* SHLabelPageView */,
-				5C52C09A214CE319000FBC96 /* SHScrollView */,
-				5C52C094214CE319000FBC96 /* UIView+SHExtension */,
 				5C52C05D214CE2EE000FBC96 /* AppDelegate.h */,
 				5C52C05E214CE2EE000FBC96 /* AppDelegate.m */,
 				5C52C0D3214CE32F000FBC96 /* ViewController.h */,
@@ -203,9 +203,9 @@
 			isa = PBXGroup;
 			children = (
 				5C52C090214CE319000FBC96 /* SHTableView.h */,
-				5C52C091214CE319000FBC96 /* SHContentViewController.m */,
-				5C52C092214CE319000FBC96 /* SHContentViewController.h */,
 				5C52C093214CE319000FBC96 /* SHTableView.m */,
+				5C52C092214CE319000FBC96 /* SHViewController.h */,
+				5C52C091214CE319000FBC96 /* SHViewController.m */,
 			);
 			path = ScrollLayout;
 			sourceTree = "<group>";
@@ -213,28 +213,10 @@
 		5C52C094214CE319000FBC96 /* UIView+SHExtension */ = {
 			isa = PBXGroup;
 			children = (
-				5C52C095214CE319000FBC96 /* UIView+SHExtension.m */,
 				5C52C096214CE319000FBC96 /* UIView+SHExtension.h */,
+				5C52C095214CE319000FBC96 /* UIView+SHExtension.m */,
 			);
 			path = "UIView+SHExtension";
-			sourceTree = "<group>";
-		};
-		5C52C097214CE319000FBC96 /* SHLabelPageView */ = {
-			isa = PBXGroup;
-			children = (
-				5C52C098214CE319000FBC96 /* SHLabelPageView.h */,
-				5C52C099214CE319000FBC96 /* SHLabelPageView.m */,
-			);
-			path = SHLabelPageView;
-			sourceTree = "<group>";
-		};
-		5C52C09A214CE319000FBC96 /* SHScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				5C52C09B214CE319000FBC96 /* SHScrollView.m */,
-				5C52C09C214CE319000FBC96 /* SHScrollView.h */,
-			);
-			path = SHScrollView;
 			sourceTree = "<group>";
 		};
 		5C52C0A2214CE322000FBC96 /* SDWebImage */ = {
@@ -281,6 +263,24 @@
 				5C52C0C2214CE322000FBC96 /* UIImage+GIF.h */,
 			);
 			path = SDWebImage;
+			sourceTree = "<group>";
+		};
+		5CB37F1F2174332D00D8219E /* SHScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				5CB37F212174332D00D8219E /* SHScrollView.h */,
+				5CB37F202174332D00D8219E /* SHScrollView.m */,
+			);
+			path = SHScrollView;
+			sourceTree = "<group>";
+		};
+		5CB37F23217433C500D8219E /* SHLabelPageView */ = {
+			isa = PBXGroup;
+			children = (
+				5CB37F24217433C500D8219E /* SHLabelPageView.h */,
+				5CB37F25217433C500D8219E /* SHLabelPageView.m */,
+			);
+			path = SHLabelPageView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,15 +427,15 @@
 				5C52C0C5214CE322000FBC96 /* SDWebImageManager.m in Sources */,
 				5C52C0D1214CE322000FBC96 /* UIView+WebCacheOperation.m in Sources */,
 				5C52C0CB214CE322000FBC96 /* SDWebImageCompat.m in Sources */,
-				5C52C09D214CE31A000FBC96 /* SHContentViewController.m in Sources */,
+				5C52C09D214CE31A000FBC96 /* SHViewController.m in Sources */,
 				5C52C0C7214CE322000FBC96 /* UIImageView+HighlightedWebCache.m in Sources */,
-				5C52C0A0214CE31A000FBC96 /* SHLabelPageView.m in Sources */,
 				5C52C0CF214CE322000FBC96 /* NSData+ImageContentType.m in Sources */,
+				5CB37F26217433C500D8219E /* SHLabelPageView.m in Sources */,
 				5C52C0D5214CE34B000FBC96 /* ViewController.m in Sources */,
 				5C52C0CD214CE322000FBC96 /* SDImageCache.m in Sources */,
 				5C52C0CA214CE322000FBC96 /* UIImage+MultiFormat.m in Sources */,
 				5C52C06D214CE2F0000FBC96 /* main.m in Sources */,
-				5C52C0A1214CE31A000FBC96 /* SHScrollView.m in Sources */,
+				5CB37F222174332D00D8219E /* SHScrollView.m in Sources */,
 				5C52C05F214CE2EE000FBC96 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,7 +606,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YHGV678NGG;
 				INFOPLIST_FILE = ScrollLayoutExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -622,7 +624,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YHGV678NGG;
 				INFOPLIST_FILE = ScrollLayoutExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

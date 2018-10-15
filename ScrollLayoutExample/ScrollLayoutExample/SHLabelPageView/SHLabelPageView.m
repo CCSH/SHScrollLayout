@@ -7,7 +7,6 @@
 //
 
 #import "SHLabelPageView.h"
-#import "UIView+SHExtension.h"
 
 @interface SHLabelPageView ()
 
@@ -82,10 +81,6 @@ static CGFloat space = 20;
     //增加下划线动画
     CGFloat scale = 0;
     
-    //文字颜色
-    CGFloat scaleRight = 0;
-    CGFloat scaleLeft = 0;
-    
     //间隔
     CGFloat margin = rightLab.centerX - leftLab.centerX;
     
@@ -104,9 +99,6 @@ static CGFloat space = 20;
             //X不变
             self.currentLine.x = (leftLab.centerX - 10);
         }
-        //右边边颜色越来越小
-        scaleRight = 0.5 + (contentOffsetX - leftIndex)/2;
-        scaleLeft = 0.5 + (1 - (contentOffsetX - leftIndex))/2;
     }
     
     if (self.index < rightIndex) {//左滑
@@ -124,18 +116,17 @@ static CGFloat space = 20;
             //X减小
             self.currentLine.x = (rightLab.centerX - 10) - scale*margin;
         }
-
-        //左边边颜色越来越小
-        scaleLeft = 0.5 + (rightIndex - contentOffsetX)/2;
-        scaleRight = 0.5 + (1 - (rightIndex - contentOffsetX))/2;
     }
     
     //设置 width 变化
     self.currentLine.width = 20 + scale*margin;
     
+    //文字颜色
+    CGFloat scaleLeft = (rightIndex - contentOffsetX);
+    
     //设置左右视图颜色变化
-    leftLab.textColor  = [self.selectedColor?:[UIColor blackColor] colorWithAlphaComponent:scaleLeft];
-    rightLab.textColor = [self.selectedColor?:[UIColor blackColor] colorWithAlphaComponent:scaleRight];
+    leftLab.textColor  = [self getColorWithScale:scaleLeft];
+    rightLab.textColor = [self getColorWithScale:1 - scaleLeft];
     
     if (leftIndex == contentOffsetX) {
         self.index = leftIndex;
@@ -162,11 +153,11 @@ static CGFloat space = 20;
     CGFloat view_h = self.pageScroll.bounds.size.height;
     
     //间隔
-    __block  CGFloat view_x = 8;
+    __block CGFloat view_x = self.startX;;
     __block CGFloat view_width = 0;
     
     if (self.type == SHLabelPageType_one) {
-        view_x = 30;
+        
         view_width = (self.width - 2*view_x)/self.pageList.count;
     }
     
@@ -176,11 +167,10 @@ static CGFloat space = 20;
         UILabel *label = [self getChannelLab];
         label.text = obj;
         
-        
         if (self.type == SHLabelPageType_one) {
             label.frame = CGRectMake(view_x, 0, view_width, view_h);
         }else{
-            label.frame = CGRectMake(view_x, 0, [self getChannelWithText:obj], view_h);
+            label.frame = CGRectMake(view_x, 0, [self getChannelWithText:obj] + space, view_h);
         }
         
         view_x += label.width;
@@ -189,7 +179,7 @@ static CGFloat space = 20;
         [self.pageScroll addSubview:label];
     }];
 
-    self.pageScroll.contentSize = CGSizeMake(self.width, 0);
+    self.pageScroll.contentSize = CGSizeMake(view_x, 0);
     [self.pageScroll addSubview:self.currentLine];
     //刷新界面
     [self reloadPage];
@@ -211,9 +201,9 @@ static CGFloat space = 20;
 #pragma mark 获取宽度
 - (CGFloat)getChannelWithText:(NSString *)text{
     
-    CGSize size = [text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.pageScroll.height) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:self.fontSize?:[UIFont systemFontOfSize:18]} context:nil].size;
+    CGSize size = [text boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.pageScroll.height) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:self.fontSize?:[UIFont systemFontOfSize:18]} context:nil].size;
     
-    return ceil(size.width) + space;
+    return ceil(size.width);
 }
 
 #pragma mark 标签点击
@@ -230,31 +220,14 @@ static CGFloat space = 20;
         return;
     }
     
-    NSLog(@"\n当前位置 === %@",self.pageList[self.index]);
-    
     //取出当前的标签
     UILabel *currentLab = [self.pageScroll viewWithTag:self.index + labTag];
-    
-    if (self.type == SHLabelPageType_more) {
-        
-        //设置scroll居中
-        CGFloat offsetX = currentLab.centerX - self.pageScroll.width * 0.5;
-        CGFloat offsetMaxX = self.pageScroll.contentSize.width - self.pageScroll.width;
-        
-        if (offsetX < 0){
-            offsetX = 0;
-        }
-        if (offsetX > offsetMaxX) {
-            offsetX = offsetMaxX;
-        }
-        [self.pageScroll setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    }
     
     //改变颜色
     for (UILabel *label in self.pageScroll.subviews) {
         if (label.tag >= labTag && label.tag < (self.pageList.count + labTag)) {
             //未选中颜色
-            label.textColor = [self.selectedColor?:[UIColor blackColor] colorWithAlphaComponent:0.5];
+            label.textColor = [self getColorWithScale:0];
         }
     }
     
@@ -263,8 +236,73 @@ static CGFloat space = 20;
     [UIView animateWithDuration:0.25 animations:^{
         self.currentLine.centerX = currentLab.centerX;
         //选中颜色
-        currentLab.textColor = self.selectedColor?:[UIColor blackColor];
+        currentLab.textColor = [self getColorWithScale:1];
+    }completion:^(BOOL finished) {
+        
+        if (self.type == SHLabelPageType_more) {//多个标签
+            //设置scroll居中
+            CGFloat offsetX = currentLab.centerX - self.pageScroll.width * 0.5;
+            CGFloat offsetMaxX = self.pageScroll.contentSize.width - self.pageScroll.width;
+            
+            //左边
+            if (offsetX < 0){
+                offsetX = 0;
+            }
+            //右边
+            if (offsetX > offsetMaxX) {
+                offsetX = offsetMaxX;
+            }
+            
+            [self.pageScroll setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        }
     }];
+}
+
+#pragma mark 获取颜色RGB
+- (UIColor *)getColorWithScale:(CGFloat)scale{
+    
+    //0 ~ 1
+    NSArray *uncheckColorArr = [self getRGBWithColor:self.uncheckColor?:[[UIColor blackColor] colorWithAlphaComponent:0.3]];
+    
+    NSArray *checkColorArr = [self getRGBWithColor:self.checkColor?:[UIColor blackColor]];
+    //(x + (y-x)*k)
+    CGFloat red = [uncheckColorArr[0] floatValue] + ([checkColorArr[0] floatValue] - [uncheckColorArr[0] floatValue])*scale;
+    CGFloat green = [uncheckColorArr[1] floatValue] + ([checkColorArr[1] floatValue] - [uncheckColorArr[1] floatValue])*scale;
+    CGFloat blue = [uncheckColorArr[2] floatValue] + ([checkColorArr[2] floatValue] - [uncheckColorArr[2] floatValue])*scale;
+    CGFloat alpha = [uncheckColorArr[3] floatValue] + ([checkColorArr[3] floatValue] - [uncheckColorArr[3] floatValue])*scale;
+    
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
+#pragma mark 获取颜色RGB集合
+- (NSArray *)getRGBWithColor:(UIColor *)color{
+    
+    //获得RGB值描述
+    NSString *RGBValue = [NSString stringWithFormat:@"%@",color];
+    //将RGB值描述分隔成字符串
+    NSArray *RGBArr = [RGBValue componentsSeparatedByString:@" "];
+    
+    if (RGBArr.count == 3) {
+        RGBArr = @[RGBArr[1],RGBArr[1],RGBArr[1],RGBArr[2]];
+    }else{
+        RGBArr = @[RGBArr[1],RGBArr[2],RGBArr[3],RGBArr[4]];
+    }
+    
+    NSString *RGBStr;
+    //获取 R
+    float red = [RGBArr[0] floatValue];
+    RGBStr = [NSString stringWithFormat:@"%f",red];
+    //获取 G
+    float green = [RGBArr[1] floatValue];
+    RGBStr = [NSString stringWithFormat:@"%f",green];
+    //获取 B
+    float blue = [RGBArr[2] floatValue];
+    RGBStr = [NSString stringWithFormat:@"%f",blue];
+    //获取 alpha
+    CGFloat alpha = [RGBArr[3] floatValue];
+    
+    //返回保存RGB值的数组
+    return @[[NSString stringWithFormat:@"%f",red],[NSString stringWithFormat:@"%f",green],[NSString stringWithFormat:@"%f",blue],[NSString stringWithFormat:@"%f",alpha]];
 }
 
 #pragma mark - 懒加载

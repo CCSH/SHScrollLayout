@@ -1,5 +1,5 @@
 //
-//  SHContentViewController.h
+//  SHViewController.h
 //  ScrollLayout
 //
 //  Created by CSH on 2018/9/7.
@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class SHTableView;
 /**
  视图内容 可以自己定义
  */
-@interface SHContentViewController : UIViewController
+@interface SHViewController : UIViewController
 
-//是否可以滚动
-@property (nonatomic, assign) BOOL canScroll;
-//到达顶部通知
-@property (nonatomic, copy) NSString *topNot;
 //内容
 @property (nonatomic, strong) UITableView *tableView;
+
+//主tableview
+@property (nonatomic, strong) SHTableView *mainTableView;
 
 @end

@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "UIView+SHExtension.h"
 #import "SHTableView.h"
-#import "SHContentViewController.h"
+#import "SHViewController.h"
 #import "SHScrollView.h"
 #import "SHLabelPageView.h"
 
@@ -47,6 +47,8 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.view.backgroundColor = [UIColor lightGrayColor];
+    
     if (@available(iOS 11.0, *)) {
         self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
@@ -57,6 +59,29 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     [self configData];
 }
 
+#pragma mark - 配置参数
+- (void)configData{
+    
+    NSMutableArray <SHViewController *>*viewControllers = [[NSMutableArray alloc]init];
+    
+    for (int i = 0; i < 3; i++) {
+        
+        SHViewController *vc = [[SHViewController alloc]init];
+        vc.tableView.height = self.scrollView.height;
+        vc.mainTableView = self.tableView;
+        [self addChildViewController:vc];
+        [viewControllers addObject:vc];
+        
+        vc.view.tag = 10 + i;
+    }
+    
+    self.tableView.viewControllers = viewControllers;
+    self.scrollView.contentArr = viewControllers;
+    
+    [self.tableView reloadData];
+}
+
+#pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
 }
@@ -66,23 +91,23 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         return 1;
     }
     //头部
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section) {//内容
+    if (indexPath.section) {//下方内容
         
-        return self.tableView.height - self.tableView.head_h;
+        return self.tableView.height - self.tableView.head_h - self.tableView.headPosition;
     }
-    //头部
-    return 100;
+    //上方内容
+    return 50;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section) {
-        return self.tableView.head_h;
+        return self.pageView.height;
     }
     return 0;
 }
@@ -131,21 +156,23 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 
     if ([scrollView isEqual:self.tableView]) {
-        //处理滑动数据
-        [self.tableView dealScrollData];
+        //处理整体滑动数据
+        [self.tableView dealMainScrollData];
     }
 }
 
 #pragma mark 懒加载
 - (SHTableView *)tableView{
     if (!_tableView) {
-        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) style:UITableViewStylePlain];
+        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height - 20) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         
+        //设置悬停位置
         _tableView.headPosition = 20;
-        _tableView.head_h = 50;
+        //设置头部高度
+        _tableView.head_h = 48;
         
         [self.view addSubview:_tableView];
     }
@@ -155,8 +182,8 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 - (SHScrollView *)scrollView{
     if (!_scrollView) {
         _scrollView = [[SHScrollView alloc]init];
-        _scrollView.frame = CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height - self.tableView.head_h - self.tableView.headPosition);
-        
+        _scrollView.frame = CGRectMake(0, 0, self.tableView.width, self.tableView.height - self.tableView.head_h - self.tableView.headPosition);
+        //设置自动轮播时间间隔
         _scrollView.timeInterval = -1;
         
         kSHWeak(self);
@@ -182,27 +209,6 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     return _scrollView;
 }
 
-- (void)configData{
-    
-    NSMutableArray <SHContentViewController *>*viewControllers = [[NSMutableArray alloc]init];
-    
-    for (int i = 0; i < 3; i++) {
-        
-        SHContentViewController *vc = [[SHContentViewController alloc]init];
-        vc.tableView.height = self.scrollView.height;
-        vc.topNot = self.tableView.topNot;
-        [self addChildViewController:vc];
-        [viewControllers addObject:vc];
-        
-        vc.view.tag = 10 + i;
-    }
-    
-    self.tableView.viewControllers = viewControllers;
-    self.scrollView.contentArr = viewControllers;
-    
-    [self.tableView reloadData];
-}
-
 - (SHLabelPageView *)pageView{
 
     if (!_pageView) {
@@ -211,9 +217,10 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 
         _pageView = [SHLabelPageView shareSHLabelPageView];
 
-        _pageView.frame = CGRectMake(0, 0, kSHDevice_Width, 50);
+        _pageView.frame = CGRectMake(0, 0, self.tableView.width, self.tableView.head_h);
         _pageView.pageList = pageList;
         _pageView.type = SHLabelPageType_one;
+        _pageView.startX = 50;
         kSHWeak(self)
         //回调
         _pageView.pageViewBlock = ^(SHLabelPageView *pageView) {
