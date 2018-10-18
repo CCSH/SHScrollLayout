@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "SHScrollLayout"
-    s.version      = "1.0.2"
+    s.version      = "1.0.3"
     s.summary      = "仿半糖、闲鱼、QQ联系人等界面布局"
     s.license      = "MIT"
     s.authors      = { "CSH" => "624089195@qq.com" }

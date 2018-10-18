@@ -35,7 +35,10 @@
     
     if (canScroll) {
         //处理子视图到顶部
-        [self dealContentContentOffset];
+        for (UIScrollView *obj in self.taleviews) {
+            //修改所有子vc的状态回到顶部
+            obj.contentOffset = CGPointZero;
+        }
     }
 }
 
@@ -48,7 +51,7 @@
 #pragma mark - 处理滑动数据
 - (void)dealMainScrollData{
     //找到主视图规定的位置
-    CGFloat headOffset = [self rectForSection:self.section].origin.y - self.headPosition;
+    int headOffset = (int)([self rectForSection:self.section].origin.y - self.headPosition);
     
     if (self.canScroll) {//可以滚动
         
@@ -69,7 +72,6 @@
 - (void)dealContentScrollDataWithScroll:(UIScrollView *)scroll{
     
     if (self.canScroll) {//不可以滚动
-        
         if (!self.bounces && self.contentOffset.y == 0) {//虽然 主视图可以滚动，但是 主视图设置了不能滚动
             //则内容视图滚动
             
@@ -84,19 +86,6 @@
             self.canScroll = YES;
         }
     }
-}
-
-//处理内容到顶部
-- (void)dealContentContentOffset{
-    
-    for (UIScrollView *obj in self.taleviews) {
-        //修改所有子vc的状态回到顶部
-        obj.contentOffset = CGPointZero;
-    }
-}
-
-- (NSInteger)numberOfRowsInSection:(NSInteger)section{
-    return 2;
 }
 
 @end

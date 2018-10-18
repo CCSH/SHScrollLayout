@@ -119,7 +119,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     if (section == self.tableView.section) {
         return self.head_h;
     }
-    return 0.01;
+    return 20;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -180,7 +180,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         _tableView.showsVerticalScrollIndicator = NO;
         
         //设置了则标签下方刷新
-//         _tableView.bounces = NO;
+        _tableView.bounces = NO;
         //需要处理的组
         _tableView.section = 2;
         //处理组头部悬停位置
