@@ -34,8 +34,6 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 @property (nonatomic, strong) SHLabelPageView *pageView;
 //内容视图
 @property (nonatomic, strong) SHScrollView *scrollView;
-//内容载体cell
-@property (nonatomic, strong) UITableViewCell *contentCell;
 
 //头部视图高度
 @property (nonatomic, assign) CGFloat head_h;
@@ -87,20 +85,20 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 
 #pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 1) {//内容
+    if (section == self.tableView.section) {//内容
         return 1;
     }
     //头部
-    return 4;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section) {//下方内容
+    if (indexPath.section == self.tableView.section) {//下方内容
         
         return self.tableView.height - self.tableView.headPosition - self.head_h;
     }
@@ -109,36 +107,44 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    return 0.01;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    return [UIView new];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section) {
+    if (section == self.tableView.section) {
         return self.head_h;
     }
-    return 0;
+    return 0.01;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    if (section) {
+    if (section == self.tableView.section) {
         return self.pageView;
     }
-    return nil;
+    return [UIView new];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section) {//内容
+    if (indexPath.section == self.tableView.section) {//内容
         
         static NSString *cellId = @"cellId";
-        self.contentCell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
         
-        if (!self.contentCell) {
+        if (!cell) {
             
-            self.contentCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-            self.contentCell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [self.contentCell.contentView addSubview:self.scrollView];
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.contentView addSubview:self.scrollView];
         }
         
-        return self.contentCell;
+        return cell;
         
     }else{//头部
         
@@ -149,7 +155,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellheadId];
         }
         
-        cell.textLabel.text = [NSString stringWithFormat:@"头部cell --- %ld",(long)indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"头部cell %ld --- %ld",(long)indexPath.section,(long)indexPath.row];
         cell.backgroundColor = [UIColor orangeColor];
         
         return cell;
@@ -168,13 +174,17 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 #pragma mark 懒加载
 - (SHTableView *)tableView{
     if (!_tableView) {
-        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height) style:UITableViewStylePlain];
+        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         
-        //设置悬停位置
-        _tableView.headPosition = 20;
+        //设置了则标签下方刷新
+//         _tableView.bounces = NO;
+        //需要处理的组
+        _tableView.section = 2;
+        //处理组头部悬停位置
+        _tableView.headPosition = 100;
         
         [self.view addSubview:_tableView];
     }
@@ -220,9 +230,10 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         _pageView = [SHLabelPageView shareSHLabelPageView];
         
         _pageView.frame = CGRectMake(0, 0, self.tableView.width, self.head_h);
+        _pageView.backgroundColor = [UIColor whiteColor];
         _pageView.pageList = pageList;
         _pageView.type = SHLabelPageType_one;
-        _pageView.startX = 50;
+        _pageView.startX = 0;
         kSHWeak(self)
         //回调
         _pageView.pageViewBlock = ^(SHLabelPageView *pageView) {

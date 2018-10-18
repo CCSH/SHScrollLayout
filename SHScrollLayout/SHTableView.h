@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHTableView : UITableView 
+@interface SHTableView : UITableView
+
+//需要特殊处理的组
+@property (nonatomic, assign) NSInteger section;
 
 //头部悬停位置
 @property (nonatomic, assign) CGFloat headPosition;

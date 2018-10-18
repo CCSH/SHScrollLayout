@@ -33,12 +33,9 @@
 - (void)setCanScroll:(BOOL)canScroll{
     _canScroll = canScroll;
     
-    //主视图可以滚动则子视图不可滚动
-    for (UIScrollView *obj in self.taleviews) {
-        //如果主视图滑动，修改所有子vc的状态回到顶部
-        if (canScroll) {
-            obj.contentOffset = CGPointZero;
-        }
+    if (canScroll) {
+        //处理子视图到顶部
+        [self dealContentContentOffset];
     }
 }
 
@@ -50,37 +47,56 @@
 
 #pragma mark - 处理滑动数据
 - (void)dealMainScrollData{
+    //找到主视图规定的位置
+    CGFloat headOffset = [self rectForSection:self.section].origin.y - self.headPosition;
     
-    //找到悬浮的位置
-    CGFloat headOffset = [self rectForSection:1].origin.y - self.headPosition;
-    
-    if (self.contentOffset.y >= headOffset) {//达到了规定位置、父视图不可滚动
+    if (self.canScroll) {//可以滚动
         
-        self.contentOffset = CGPointMake(0, headOffset);
-        
-        if (self.canScroll) {
+        //主视图到达指定位置，主视图不可滚动
+        if (self.contentOffset.y >= headOffset) {
+            //告诉 内容视图可以滚动了
             self.canScroll = NO;
-        }
-    }else{//达到了规定位置、父视图可滚动
-        if (!self.canScroll) {//父视图不允许滚动、手动设置位置
             self.contentOffset = CGPointMake(0, headOffset);
         }
+    }else{//不可滚动
+        
+        //手动设置主视图位置
+        self.contentOffset = CGPointMake(0, headOffset);
     }
 }
 
 #pragma mark - 处理内容滑动数据
 - (void)dealContentScrollDataWithScroll:(UIScrollView *)scroll{
     
-    if (self.canScroll) {
-        scroll.contentOffset = CGPointZero;
+    if (self.canScroll) {//不可以滚动
+        
+        if (!self.bounces && self.contentOffset.y == 0) {//虽然 主视图可以滚动，但是 主视图设置了不能滚动
+            //则内容视图滚动
+            
+        }else{//手动设置位置
+            scroll.contentOffset = CGPointZero;
+        }
+    }else{//可以滚动
+        
+        //内容视图到达顶部
+        if (scroll.contentOffset.y <= 0) {
+            //告诉 主视图可以滚动了
+            self.canScroll = YES;
+        }
     }
+}
+
+//处理内容到顶部
+- (void)dealContentContentOffset{
     
-    //子 tableview 到顶部了
-    if (scroll.contentOffset.y <= 0) {
-        //到顶通知父视图改变状态
-        self.canScroll = YES;
-        scroll.contentOffset = CGPointZero;
+    for (UIScrollView *obj in self.taleviews) {
+        //修改所有子vc的状态回到顶部
+        obj.contentOffset = CGPointZero;
     }
+}
+
+- (NSInteger)numberOfRowsInSection:(NSInteger)section{
+    return 2;
 }
 
 @end

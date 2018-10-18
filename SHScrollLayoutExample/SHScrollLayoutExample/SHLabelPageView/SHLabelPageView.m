@@ -244,18 +244,20 @@ static CGFloat space = 20;
             CGFloat offsetX = currentLab.centerX - self.pageScroll.width * 0.5;
             CGFloat offsetMaxX = self.pageScroll.contentSize.width - self.pageScroll.width;
             
-            //左边
-            if (offsetX < 0){
-                offsetX = 0;
-            }
             //右边
             if (offsetX > offsetMaxX) {
                 offsetX = offsetMaxX;
             }
             
+            //左边
+            if (offsetX < 0){
+                offsetX = 0;
+            }
+            
             [self.pageScroll setContentOffset:CGPointMake(offsetX, 0) animated:YES];
         }
     }];
+    
 }
 
 #pragma mark 获取颜色RGB

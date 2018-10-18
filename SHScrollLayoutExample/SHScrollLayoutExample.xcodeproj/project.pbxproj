@@ -167,13 +167,13 @@
 				5CB37FC4217462D900D8219E /* SHLabelPageView */,
 				5CB37FCA217462DA00D8219E /* SHScrollLayout */,
 				5CB37FA0217462D900D8219E /* SHScrollView */,
-				5CB37FCE217462DA00D8219E /* SHViewController.h */,
-				5CB37FCD217462DA00D8219E /* SHViewController.m */,
 				5CB37FC7217462D900D8219E /* UIView+SHExtension */,
 				5CB37F332174610A00D8219E /* AppDelegate.h */,
 				5CB37F342174610A00D8219E /* AppDelegate.m */,
 				5CB37F362174610A00D8219E /* ViewController.h */,
 				5CB37F372174610A00D8219E /* ViewController.m */,
+				5CB37FCE217462DA00D8219E /* SHViewController.h */,
+				5CB37FCD217462DA00D8219E /* SHViewController.m */,
 				5CB37F392174610A00D8219E /* Main.storyboard */,
 				5CB37F3C2174610B00D8219E /* Assets.xcassets */,
 				5CB37F3E2174610B00D8219E /* LaunchScreen.storyboard */,
@@ -608,6 +608,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YHGV678NGG;
 				INFOPLIST_FILE = SHScrollLayoutExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -624,6 +625,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = YHGV678NGG;
 				INFOPLIST_FILE = SHScrollLayoutExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
