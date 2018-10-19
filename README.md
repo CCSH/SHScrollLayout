@@ -5,5 +5,9 @@
 ```
 pod 'SHScrollLayout'
 ```
+# 内部使用的组件请 pod 引用最新版本
+```
+pod 'SHLabelPageView'
+```
 
 ![image](https://github.com/CCSH/ScrollLayout/blob/master/QQ20180915-144725-HD.gif)
