@@ -72,7 +72,12 @@
 - (void)dealContentScrollDataWithScroll:(UIScrollView *)scroll{
     
     if (self.canScroll) {//不可以滚动
-        if (!self.bounces && self.contentOffset.y == 0) {//虽然 主视图可以滚动，但是 主视图设置了不能滚动
+        
+        //找到主视图规定的位置
+        int headOffset = (int)([self rectForSection:self.section].origin.y - self.headPosition);
+        
+        //虽然 主视图可以滚动，但是 主视图设置了不能滚动 并且 已经达到位置了
+        if (!self.bounces && (self.contentOffset.y == 0 || self.contentOffset.y == headOffset)) {
             //则内容视图滚动
             
         }else{//手动设置位置

@@ -204,8 +204,8 @@
 		5CB37FA0217462D900D8219E /* SHScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				5CB37FA1217462D900D8219E /* SHScrollView.m */,
 				5CB37FA2217462D900D8219E /* SHScrollView.h */,
+				5CB37FA1217462D900D8219E /* SHScrollView.m */,
 			);
 			path = SHScrollView;
 			sourceTree = "<group>";
