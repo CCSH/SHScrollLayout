@@ -12,11 +12,10 @@
 
 //需要特殊处理的组
 @property (nonatomic, assign) NSInteger section;
-
 //头部悬停位置
 @property (nonatomic, assign) CGFloat headPosition;
 //子视图集合(主要为了控制主视图可以滚动时 内容视图全部滚动到顶部)
-@property (nonatomic, strong) NSMutableArray <UIScrollView *>*taleviews;
+@property (nonatomic, copy) NSArray <UIScrollView *>*taleviews;
 
 //处理整体滑动数据(在整体滑动中 - (void)scrollViewDidScroll:(UIScrollView *)scrollView)
 - (void)dealMainScrollData;

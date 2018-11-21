@@ -35,9 +35,6 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 //内容视图
 @property (nonatomic, strong) SHScrollView *scrollView;
 
-//头部视图高度
-@property (nonatomic, assign) CGFloat head_h;
-
 @end
 
 @implementation ViewController
@@ -61,12 +58,10 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 #pragma mark - 配置参数
 - (void)configData{
     
-    self.head_h = 48;
-    
     NSMutableArray <UIScrollView *>*tableviews = [[NSMutableArray alloc]init];
     NSMutableArray <SHViewController *>*viewControllers = [[NSMutableArray alloc]init];
     
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < self.pageView.pageList.count; i++) {
         
         SHViewController *vc = [[SHViewController alloc]init];
         vc.tableView.height = self.scrollView.height;
@@ -74,11 +69,14 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         [self addChildViewController:vc];
         [tableviews addObject:vc.tableView];
         [viewControllers addObject:vc];
+        
         vc.view.tag = 10 + i;
     }
     
     self.tableView.taleviews = tableviews;
     self.scrollView.contentArr = viewControllers;
+    
+    self.pageView.index = 1;
     
     [self.tableView reloadData];
 }
@@ -89,42 +87,32 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     if (section == self.tableView.section) {//内容
         return 1;
     }
-    //头部
     return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.section == self.tableView.section) {//下方内容
-        
-        return self.tableView.height - self.tableView.headPosition - self.head_h;
+    if (indexPath.section == self.tableView.section) {//内容
+        return self.scrollView.height;
     }
-    //上方内容
     return 80;
-    
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.01;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    return [UIView new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == self.tableView.section) {
-        return self.head_h;
+    
+    if (section == self.tableView.section) {//内容
+        return self.pageView.height;
     }
     return 20;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    if (section == self.tableView.section) {
+    if (section == self.tableView.section) {//内容
         return self.pageView;
     }
     return [UIView new];
@@ -146,7 +134,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         
         return cell;
         
-    }else{//头部
+    }else{
         
         static NSString *cellheadId = @"cellheadId";
         
@@ -174,7 +162,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 #pragma mark 懒加载
 - (SHTableView *)tableView{
     if (!_tableView) {
-        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height) style:UITableViewStyleGrouped];
+        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
@@ -184,7 +172,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         //需要处理的组
         _tableView.section = 2;
         //处理组头部悬停位置
-        _tableView.headPosition = 100;
+        _tableView.headPosition = 64;
         
         [self.view addSubview:_tableView];
     }
@@ -194,7 +182,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 - (SHScrollView *)scrollView{
     if (!_scrollView) {
         _scrollView = [[SHScrollView alloc]init];
-        _scrollView.frame = CGRectMake(0, 0, self.tableView.width, self.tableView.height - self.tableView.headPosition - self.head_h);
+        _scrollView.frame = CGRectMake(0, 0, self.tableView.width, self.tableView.height - self.tableView.headPosition - self.pageView.height);
         //设置自动轮播时间间隔
         _scrollView.timeInterval = -1;
         
@@ -215,7 +203,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         //滚动中
         _scrollView.rollingBlock = ^(CGFloat offset) {
             //设置偏移
-            [SHLabelPageView shareSHLabelPageView].contentOffsetX = offset;
+            weak_self.pageView.contentOffsetX = offset;
         };
     }
     return _scrollView;
@@ -227,21 +215,19 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         
         NSArray *pageList = @[@"最新",@"热门",@"精华"];
         
-        _pageView = [SHLabelPageView shareSHLabelPageView];
+        _pageView = [[SHLabelPageView alloc]init];
         
-        _pageView.frame = CGRectMake(0, 0, self.tableView.width, self.head_h);
+        _pageView.frame = CGRectMake(0, 0, self.tableView.width, 48);
         _pageView.backgroundColor = [UIColor whiteColor];
         _pageView.pageList = pageList;
         _pageView.type = SHLabelPageType_one;
-        _pageView.startX = 0;
+        _pageView.spaceW = 50;
         kSHWeak(self)
         //回调
         _pageView.pageViewBlock = ^(SHLabelPageView *pageView) {
             
             weak_self.scrollView.currentIndex = pageView.index;
         };
-        
-        _pageView.index = 1;
         //刷新界面
         [_pageView reloadView];
     }

@@ -1,0 +1,6 @@
+framework module SHLabelPageView {
+  umbrella header "SHLabelPageView-umbrella.h"
+
+  export *
+  module * { export * }
+}

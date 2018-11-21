@@ -1,0 +1,6 @@
+framework module UIView_SHExtension {
+  umbrella header "UIView+SHExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}

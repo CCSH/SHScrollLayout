@@ -1,0 +1,13 @@
+
+platform  :ios,'8.0'
+inhibit_all_warnings!
+use_frameworks!
+
+target 'SHScrollLayoutExample' do
+
+  pod 'SHLabelPageView'
+  pod 'SHScrollView'
+  pod 'SDWebImage'
+  pod 'UIView+SHExtension'
+
+end
