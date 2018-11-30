@@ -1,4 +1,5 @@
 # SHScrollLayout
+> 使用中如果有其他问题可以[`告诉我`](https://github.com/CCSH/SHScrollLayout/issues/new)
 仿半糖、闲鱼、QQ联系人、豆瓣小组、微博等界面布局 一个文件实现
 
 # pod导入
