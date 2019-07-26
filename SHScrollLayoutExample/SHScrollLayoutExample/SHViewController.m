@@ -46,7 +46,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return arc4random()%30;
+    return 10 + arc4random()%10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -68,7 +68,7 @@
     
      //处理内容滑动
     if ([scrollView isEqual:self.tableView]) {
-        [self.mainTableView dealContentScrollDataWithScroll:self.tableView];
+        [self.mainTableView handleChildScrollWithScroll:self.tableView];
     }
 }
 

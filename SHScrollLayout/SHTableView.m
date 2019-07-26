@@ -15,6 +15,9 @@
 //主视图是否可以滚动(内容视图与它相反)
 @property (nonatomic, assign) BOOL canScroll;
 
+//当前内容
+@property (nonatomic, weak) UIScrollView *currentScroll;
+
 @end
 
 @implementation SHTableView
@@ -35,7 +38,7 @@
     
     if (canScroll) {
         //处理子视图到顶部
-        for (UIScrollView *obj in self.taleviews) {
+        for (UIScrollView *obj in self.scrollViews) {
             //修改所有子vc的状态回到顶部
             obj.contentOffset = CGPointZero;
         }
@@ -44,12 +47,11 @@
 
 #pragma mark - 多手势处理
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    
     return YES;
 }
 
-#pragma mark - 处理滑动数据
-- (void)dealMainScrollData{
+#pragma mark - 处理主视图滑动数据
+- (void)handleMainScroll{
     //找到主视图规定的位置
     int headOffset = (int)([self rectForSection:self.section].origin.y - self.headPosition);
     
@@ -63,13 +65,16 @@
         }
     }else{//不可滚动
         
-        //手动设置主视图位置
-        self.contentOffset = CGPointMake(0, headOffset);
+        //内容不能滚动 主视图滚动
+        if (self.currentScroll.bounces) {
+            //手动设置主视图位置
+            self.contentOffset = CGPointMake(0, headOffset);
+        }
     }
 }
 
-#pragma mark - 处理内容滑动数据
-- (void)dealContentScrollDataWithScroll:(UIScrollView *)scroll{
+#pragma mark - 处理子视图滑动数据
+- (void)handleChildScrollWithScroll:(UIScrollView *)scroll{
     
     if (self.canScroll) {//不可以滚动
         
@@ -84,11 +89,12 @@
             scroll.contentOffset = CGPointZero;
         }
     }else{//可以滚动
-        
         //内容视图到达顶部
         if (scroll.contentOffset.y <= 0) {
             //告诉 主视图可以滚动了
             self.canScroll = YES;
+            
+            self.currentScroll = scroll;
         }
     }
 }

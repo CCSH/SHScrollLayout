@@ -44,13 +44,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     // Do any additional setup after loading the view, typically from a nib.
     
     self.view.backgroundColor = [UIColor lightGrayColor];
-    
-    if (@available(iOS 11.0, *)) {
-        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    } else {
-        // Fallback on earlier versions
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
+
     //设置数据源
     [self configData];
 }
@@ -65,6 +59,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         
         SHViewController *vc = [[SHViewController alloc]init];
         vc.tableView.height = self.scrollView.height;
+//        vc.tableView.bounces = NO;
         vc.mainTableView = self.tableView;
         [self addChildViewController:vc];
         [tableviews addObject:vc.tableView];
@@ -73,7 +68,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         vc.view.tag = 10 + i;
     }
     
-    self.tableView.taleviews = tableviews;
+    self.tableView.scrollViews = tableviews;
     self.scrollView.contentArr = viewControllers;
     
     self.pageView.index = 1;
@@ -99,7 +94,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     if (indexPath.section == self.tableView.section) {//内容
         return self.scrollView.height;
     }
-    return 80;
+    return 40;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -155,24 +150,25 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
     if ([scrollView isEqual:self.tableView]) {
         //处理整体滑动数据
-        [self.tableView dealMainScrollData];
+        [self.tableView handleMainScroll];
     }
 }
 
 #pragma mark 懒加载
 - (SHTableView *)tableView{
     if (!_tableView) {
-        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 0, kSHDevice_Width, kSHDevice_Height) style:UITableViewStylePlain];
+        _tableView = [[SHTableView alloc]initWithFrame:CGRectMake(0, 64, kSHDevice_Width, kSHDevice_Height - 64) style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
+        _tableView.backgroundColor = [UIColor redColor];
         
         //设置了则标签下方刷新
-        _tableView.bounces = NO;
+//        _tableView.bounces = NO;
         //需要处理的组
         _tableView.section = 2;
         //处理组头部悬停位置
-        _tableView.headPosition = 64;
+        _tableView.headPosition = 10;
         
         [self.view addSubview:_tableView];
     }
