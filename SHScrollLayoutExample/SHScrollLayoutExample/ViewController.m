@@ -32,8 +32,14 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 @property (nonatomic, strong) SHTableView *tableView;
 //标签页
 @property (nonatomic, strong) SHLabelPageView *pageView;
+
 //内容视图
 @property (nonatomic, strong) SHScrollView *scrollView;
+//内容视图
+@property (nonatomic, strong) SHViewController *vc;
+
+//内容视图高度
+@property (nonatomic, assign) CGFloat contentH;
 
 @end
 
@@ -44,13 +50,16 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     // Do any additional setup after loading the view, typically from a nib.
     
     self.view.backgroundColor = [UIColor lightGrayColor];
-
+    
+    self.contentH = self.tableView.height - self.tableView.headPosition - self.pageView.height;
+    
     //设置数据源
-    [self configData];
+    [self configData1];
+//    [self configData2];
 }
 
 #pragma mark - 配置参数
-- (void)configData{
+- (void)configData1{
     
     NSMutableArray <UIScrollView *>*tableviews = [[NSMutableArray alloc]init];
     NSMutableArray <SHViewController *>*viewControllers = [[NSMutableArray alloc]init];
@@ -58,7 +67,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     for (int i = 0; i < self.pageView.pageList.count; i++) {
         
         SHViewController *vc = [[SHViewController alloc]init];
-        vc.tableView.height = self.scrollView.height;
+        vc.tableView.height = self.contentH;
 //        vc.tableView.bounces = NO;
         vc.mainTableView = self.tableView;
         [self addChildViewController:vc];
@@ -70,6 +79,22 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
     self.tableView.scrollViews = tableviews;
     self.scrollView.contentArr = viewControllers;
+    
+    self.pageView.index = 1;
+    
+    [self.tableView reloadData];
+}
+
+- (void)configData2{
+    
+    self.vc = [[SHViewController alloc]init];
+    self.vc.tableView.height = self.contentH;
+//        vc.tableView.bounces = NO;
+    self.vc.mainTableView = self.tableView;
+    [self addChildViewController:self.vc];
+
+    self.tableView.scrollViews = @[self.vc.tableView];
+    self.scrollView.contentArr = @[self.vc.tableView];
     
     self.pageView.index = 1;
     
@@ -124,7 +149,14 @@ __strong __typeof__(VAR) VAR = weak_##VAR
             
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //configData1 scroll作为内容直接添加
             [cell.contentView addSubview:self.scrollView];
+            
+            //configData2 单独一个view则需要加上一个scroll 处理手势问题
+//            UIScrollView *scroll = [[UIScrollView alloc]init];
+//            scroll.frame = self.vc.tableView.frame;
+//            [scroll addSubview:self.vc.tableView];
+//            [cell.contentView addSubview:scroll];
         }
         
         return cell;
@@ -178,7 +210,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 - (SHScrollView *)scrollView{
     if (!_scrollView) {
         _scrollView = [[SHScrollView alloc]init];
-        _scrollView.frame = CGRectMake(0, 0, self.tableView.width, self.tableView.height - self.tableView.headPosition - self.pageView.height);
+        _scrollView.frame = CGRectMake(0, 0, self.tableView.width, self.contentH);
         //设置自动轮播时间间隔
         _scrollView.timeInterval = -1;
         
