@@ -15,9 +15,6 @@
 //主视图是否可以滚动(内容视图与它相反)
 @property (nonatomic, assign) BOOL canScroll;
 
-//当前内容
-@property (nonatomic, weak) UIScrollView *currentScroll;
-
 @end
 
 @implementation SHTableView
@@ -52,9 +49,10 @@
 
 #pragma mark - 处理主视图滑动数据
 - (void)handleMainScroll{
+    
     //找到主视图规定的位置
     int headOffset = (int)([self rectForSection:self.section].origin.y - self.headPosition);
-    
+
     if (self.canScroll) {//可以滚动
         
         //主视图到达指定位置，主视图不可滚动
@@ -64,18 +62,14 @@
             self.contentOffset = CGPointMake(0, headOffset);
         }
     }else{//不可滚动
-        
-        //内容不能滚动 主视图滚动
-        if (self.currentScroll.bounces) {
-            //手动设置主视图位置
-            self.contentOffset = CGPointMake(0, headOffset);
-        }
+        //手动设置主视图位置
+        self.contentOffset = CGPointMake(0, headOffset);
     }
 }
 
 #pragma mark - 处理子视图滑动数据
 - (void)handleChildScrollWithScroll:(UIScrollView *)scroll{
-    
+
     if (self.canScroll) {//不可以滚动
         
         //找到主视图规定的位置
@@ -93,8 +87,6 @@
         if (scroll.contentOffset.y <= 0) {
             //告诉 主视图可以滚动了
             self.canScroll = YES;
-            
-            self.currentScroll = scroll;
         }
     }
 }

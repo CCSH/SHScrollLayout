@@ -68,7 +68,6 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         
         SHViewController *vc = [[SHViewController alloc]init];
         vc.tableView.height = self.contentH;
-//        vc.tableView.bounces = NO;
         vc.mainTableView = self.tableView;
         [self addChildViewController:vc];
         [tableviews addObject:vc.tableView];
@@ -82,6 +81,8 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
     self.pageView.index = 1;
     
+    [self.pageView reloadView];
+    [self.scrollView reloadView];
     [self.tableView reloadData];
 }
 
@@ -89,7 +90,6 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
     self.vc = [[SHViewController alloc]init];
     self.vc.tableView.height = self.contentH;
-//        vc.tableView.bounces = NO;
     self.vc.mainTableView = self.tableView;
     [self addChildViewController:self.vc];
 
@@ -98,6 +98,8 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     
     self.pageView.index = 1;
     
+    [self.pageView reloadView];
+    [self.scrollView reloadView];
     [self.tableView reloadData];
 }
 
@@ -197,6 +199,12 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         
         //设置了则标签下方刷新
 //        _tableView.bounces = NO;
+        
+        // 主刷新 子加载
+//        主.bounces = YES;
+        // 子刷新 子加载
+//        主.bounces = NO;
+        
         //需要处理的组
         _tableView.section = 2;
         //处理组头部悬停位置
