@@ -1,12 +1,13 @@
 PODS:
-  - SDWebImage (4.4.2):
-    - SDWebImage/Core (= 4.4.2)
-  - SDWebImage/Core (4.4.2)
-  - SHLabelPageView (2.1.1):
-    - "UIView+SHExtension (= 0.0.1)"
-  - SHScrollView (2.0.2):
+  - SDWebImage (5.1.0):
+    - SDWebImage/Core (= 5.1.0)
+  - SDWebImage/Core (5.1.0)
+  - SHExtension/UIView (1.0.7)
+  - SHLabelPageView (2.1.3):
+    - SHExtension/UIView
+  - SHScrollView (2.5.0):
     - SDWebImage
-  - "UIView+SHExtension (0.0.1)"
+  - "UIView+SHExtension (1.0.0)"
 
 DEPENDENCIES:
   - SDWebImage
@@ -15,18 +16,20 @@ DEPENDENCIES:
   - "UIView+SHExtension"
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - SDWebImage
+    - SHExtension
     - SHLabelPageView
     - SHScrollView
     - "UIView+SHExtension"
 
 SPEC CHECKSUMS:
-  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
-  SHLabelPageView: 7e981b1e326c65c123c0f54d338f860857c1b04d
-  SHScrollView: 56276f3cc5e3d35fe488a747d4e9615b34e96abc
-  "UIView+SHExtension": 7d2c58e60da7de044b17407900a211a54eb855de
+  SDWebImage: fb387001955223213dde14bc08c8b73f371f8d8f
+  SHExtension: a5f9b8b652664cc4fc393e0b6a4306411f2c814c
+  SHLabelPageView: 194e7d987d6e1d0d42a4d96b6202e0faf2432f20
+  SHScrollView: 245df8c848dabec12c76e144b6c7f1d75f85854a
+  "UIView+SHExtension": b4ff77f02fb45d9517ab8ca7a4c3d2491f289bb2
 
 PODFILE CHECKSUM: 60fbd0b7ee215fe37f8345f6be550bfc7739d342
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.0.beta.1

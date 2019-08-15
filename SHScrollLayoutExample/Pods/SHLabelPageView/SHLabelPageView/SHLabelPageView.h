@@ -12,8 +12,8 @@
 
 //标签页类型
 typedef enum : NSUInteger {
-    SHLabelPageType_more,   //多页
-    SHLabelPageType_one,    //一页
+    SHLabelPageType_more,   //多页(横屏滚动)
+    SHLabelPageType_one,    //一页(标签居中)
 } SHLabelPageType;
 
 /**
@@ -45,6 +45,15 @@ typedef enum : NSUInteger {
 //标记颜色（默认红色）
 @property (nonatomic, strong) UIColor *tagColor;
 
+//选中线 (默认Size 20,4) 颜色(默认是红)
+@property (nonatomic, strong) UIView *currentLine;
+
+//下方分割线颜色(默认 237，237，237)
+@property (nonatomic, strong) UIView *line;
+
+//标签宽度(可以不设置自适应)
+@property (nonatomic, assign) CGFloat labelW;
+
 //标签字体大小(默认是加粗16)
 @property (nonatomic, strong) UIFont *fontSize;
 //标签未选中字体大小(默认是16)
@@ -53,14 +62,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIColor *checkColor;
 //标签未选中颜色(默认是黑色 0.3)
 @property (nonatomic, strong) UIColor *uncheckColor;
-
-//选中线的颜色(默认是红)
-@property (nonatomic, strong) UIColor *currentColor;
-//选中线的Y(默认距离视图下方 3)
-@property (nonatomic, assign) CGFloat currentY;
-
-//分割线颜色(默认 237，237，237)
-@property (nonatomic, strong) UIColor *lineColor;
 
 //回调(标签点击回调)
 @property (nonatomic, copy) void(^pageViewBlock)(SHLabelPageView *pageView);

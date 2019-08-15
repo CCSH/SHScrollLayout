@@ -12,10 +12,6 @@
 
 //标签滚动视图
 @property (nonatomic, strong) UIScrollView *pageScroll;
-//当前点击的线
-@property (nonatomic, strong) UIView *currentLine;
-//视图分割线
-@property (nonatomic, strong) UIView *line;
 
 @end
 
@@ -30,14 +26,14 @@ static NSInteger labTag = 10000000000;
     if (self) {
         
         //初始化数据
-        self.lineColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1];
+        self.line.backgroundColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1];
         
         self.tagColor = [UIColor redColor];
         
         self.fontSize = [UIFont boldSystemFontOfSize:16];
         self.unFontSize = [UIFont systemFontOfSize:16];
         
-        self.currentColor = [UIColor redColor];
+        self.currentLine.backgroundColor = [UIColor redColor];
         
         self.checkColor = [UIColor blackColor];
         self.uncheckColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
@@ -147,13 +143,9 @@ static NSInteger labTag = 10000000000;
     self.line.frame = CGRectMake(0, self.height - 0.5, self.width, 0.5);
     //设置滚动大小
     self.pageScroll.size = CGSizeMake(self.width, self.line.y);
-    //选中的线
-    self.currentLine.y = self.currentY;
-    self.currentLine.width = 20;
-    self.currentLine.backgroundColor = self.currentColor;
     
     //设置标签
-    CGFloat view_h = self.pageScroll.bounds.size.height;
+    CGFloat view_h = self.pageScroll.height;
     
     //间隔
     __block CGFloat view_x = self.startX;
@@ -172,7 +164,12 @@ static NSInteger labTag = 10000000000;
         [btn setTitle:obj forState:0];
         btn.tag = labTag + idx;
         
-        btn.frame = CGRectMake(view_x, 0, [self getChannelWithText:obj], view_h);
+        //设置了宽度就用、没设置用自适应
+        if (self.labelW) {
+            btn.frame = CGRectMake(view_x, 0, self.labelW, view_h);
+        }else{
+            btn.frame = CGRectMake(view_x, 0, [self getChannelWithText:obj], view_h);
+        }
         
         //设置frame
         switch (self.type) {
@@ -262,7 +259,7 @@ static NSInteger labTag = 10000000000;
     }
     
     //取出当前的标签
-    UIButton *currentBtn= [self.pageScroll viewWithTag:self.index + labTag];
+    UIButton *currentBtn = [self.pageScroll viewWithTag:self.index + labTag];
     
     //改变颜色
     for (UIButton *btn in self.pageScroll.subviews) {
@@ -376,7 +373,6 @@ static NSInteger labTag = 10000000000;
 - (UIView *)line{
     if (!_line) {
         _line = [[UIView alloc]init];
-        _line.backgroundColor = self.lineColor;
         [self addSubview:_line];
     }
     return _line;
@@ -387,7 +383,7 @@ static NSInteger labTag = 10000000000;
     if (!_currentLine) {
         _currentLine = [[UIView alloc]init];
         _currentLine.size = CGSizeMake(20, 4);
-        _currentLine.layer.cornerRadius = 2;
+        _currentLine.layer.cornerRadius = _currentLine.height/2;
         _currentLine.layer.masksToBounds = YES;
     }
     return _currentLine;
@@ -399,12 +395,11 @@ static NSInteger labTag = 10000000000;
     
     //移除以前的标签
     [self.pageScroll.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    self.pageScroll.x = 0;
     
     if (!self.pageList.count) {
         return;
     }
-    
-    self.currentY = self.currentY?:(self.height - self.currentLine.height - 3);
     
     //配置UI
     [self configUI];

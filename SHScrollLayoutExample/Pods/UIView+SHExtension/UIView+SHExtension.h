@@ -33,9 +33,4 @@
 //位置(X、Y)
 @property (nonatomic, assign) CGPoint origin;
 
-/*
- * 寻找1像素的线(可以用来隐藏导航栏下面的黑线）
- */
-- (UIImageView *)findHairlineImageViewUnder;
-
 @end

@@ -325,23 +325,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SHLabelPageView/SHLabelPageView.framework",
-				"${BUILT_PRODUCTS_DIR}/SHScrollView/SHScrollView.framework",
-				"${BUILT_PRODUCTS_DIR}/UIView+SHExtension/UIView_SHExtension.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SHLabelPageView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SHScrollView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIView_SHExtension.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -253,6 +253,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         _pageView.pageList = pageList;
         _pageView.type = SHLabelPageType_one;
         _pageView.spaceW = 50;
+        _pageView.currentLine.y = _pageView.height - 4 - 3;
         kSHWeak(self)
         //回调
         _pageView.pageViewBlock = ^(SHLabelPageView *pageView) {
