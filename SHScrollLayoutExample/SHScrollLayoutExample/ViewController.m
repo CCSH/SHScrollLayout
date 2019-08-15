@@ -196,19 +196,16 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         _tableView.dataSource = self;
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.backgroundColor = [UIColor redColor];
-        
-        //设置了则标签下方刷新
-//        _tableView.bounces = NO;
-        
-        // 主刷新 子加载
-//        主.bounces = YES;
+    
+        // 主刷新 子加载(默认)
+//        _tableView.bounces = YES;
         // 子刷新 子加载
-//        主.bounces = NO;
+//        _tableView.bounces = NO;
         
         //需要处理的组
         _tableView.section = 2;
         //处理组头部悬停位置
-        _tableView.headPosition = 10;
+        _tableView.headPosition = 20;
         
         [self.view addSubview:_tableView];
     }
@@ -225,20 +222,18 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         kSHWeak(self);
         //开始滚动
         _scrollView.startRollingBlock = ^{
-            
             //下方视图开始左右滚动的时候主tableview不能滚动
             weak_self.tableView.scrollEnabled = NO;
         };
         //结束滚动
         _scrollView.endRollingBlock = ^(BOOL isClick, NSInteger currentIndex) {
-            
             //下方视图结束左右滚动的时候主tableview滚动
             weak_self.tableView.scrollEnabled = YES;
         };
         
         //滚动中
         _scrollView.rollingBlock = ^(CGFloat offset) {
-            //设置偏移
+            //设置标签偏移
             weak_self.pageView.contentOffsetX = offset;
         };
     }
@@ -261,7 +256,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         kSHWeak(self)
         //回调
         _pageView.pageViewBlock = ^(SHLabelPageView *pageView) {
-            
+            //设置内容位置
             weak_self.scrollView.currentIndex = pageView.index;
         };
         //刷新界面
