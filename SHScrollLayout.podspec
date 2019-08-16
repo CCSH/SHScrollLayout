@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "SHScrollLayout"
-    s.version      = "2.0.2"
+    s.version      = "2.0.0"
     s.summary      = "仿淘宝、京东、半糖、闲鱼、微博等首页界面布局 一个文件实现"
     s.license      = "MIT"
     s.authors      = { "CSH" => "624089195@qq.com" }
