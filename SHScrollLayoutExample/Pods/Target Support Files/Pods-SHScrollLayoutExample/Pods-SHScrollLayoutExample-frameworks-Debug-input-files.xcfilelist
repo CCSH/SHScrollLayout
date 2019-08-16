@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample-frameworks.sh
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
+${BUILT_PRODUCTS_DIR}/SHExtension/SHExtension.framework
+${BUILT_PRODUCTS_DIR}/SHLabelPageView/SHLabelPageView.framework
+${BUILT_PRODUCTS_DIR}/SHScrollView/SHScrollView.framework

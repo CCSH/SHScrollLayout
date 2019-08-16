@@ -7,7 +7,5 @@ target 'SHScrollLayoutExample' do
 
   pod 'SHLabelPageView'
   pod 'SHScrollView'
-  pod 'SDWebImage'
-  pod 'UIView+SHExtension'
 
 end

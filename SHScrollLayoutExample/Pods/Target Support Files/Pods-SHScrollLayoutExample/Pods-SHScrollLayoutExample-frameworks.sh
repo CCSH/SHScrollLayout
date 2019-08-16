@@ -165,14 +165,12 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SHExtension/SHExtension.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SHLabelPageView/SHLabelPageView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SHScrollView/SHScrollView.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/UIView+SHExtension/UIView_SHExtension.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SHExtension/SHExtension.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SHLabelPageView/SHLabelPageView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SHScrollView/SHScrollView.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/UIView+SHExtension/UIView_SHExtension.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
