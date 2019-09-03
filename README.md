@@ -6,6 +6,7 @@
 
 > 子控制器的scrollview的bounces最好不要关闭 否则会多出很多状态进行处理，我懒就不处理了
 # pod导入
+[![Pod Version](http://img.shields.io/cocoapods/v/SHScrollLayout.svg?style=flat)](http://cocoadocs.org/docsets/SHScrollLayout/)
 ```
 pod 'SHScrollLayout'
 ```
