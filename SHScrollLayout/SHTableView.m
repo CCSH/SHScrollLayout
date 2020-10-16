@@ -28,6 +28,11 @@
     if (self) {
         //默认主视图可以滚动
         self.canScroll = YES;
+        
+        if (@available(iOS 11.0, *))
+        {
+            self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
     }
     return self;
 }

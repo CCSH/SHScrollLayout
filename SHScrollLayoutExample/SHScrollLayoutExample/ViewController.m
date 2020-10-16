@@ -59,15 +59,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 
-    if (@available(iOS 11.0, *))
-    {
-        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
-    else
-    {
-        self.automaticallyAdjustsScrollViewInsets = NO;
-    }
-
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     self.contentH = self.tableView.height - self.tableView.headPosition - self.pageView.height;
 
     //设置数据源
