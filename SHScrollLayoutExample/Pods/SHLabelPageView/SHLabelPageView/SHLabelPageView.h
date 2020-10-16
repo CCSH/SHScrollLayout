@@ -21,12 +21,23 @@ typedef enum : NSUInteger {
  */
 @interface SHLabelPageView : UIView
 
+#pragma mark - 必须设置
 //数组
 @property (nonatomic, strong) NSArray <NSString *>*pageList;
+
+//回调(标签点击回调)
+@property (nonatomic, copy) void(^pageViewBlock)(SHLabelPageView *pageView);
+
+#pragma mark - 选择设置
 //类型
 @property (nonatomic, assign) SHLabelPageType type;
 //当前位置(默认是0)
 @property (nonatomic, assign) NSInteger index;
+
+//偏移量(设置滑动中的效果)
+@property (nonatomic, assign) CGFloat contentOffsetX;
+
+#pragma mark 标签布局设置(更改设置需要调用 reloadView)
 
 //标签开始的X(如果是 一页的话就是居中)
 @property (nonatomic, assign) CGFloat startX;
@@ -34,22 +45,6 @@ typedef enum : NSUInteger {
 //如果一页设置了 spaceW 则 startX 失效
 //如果一页不设置 spaceW 则去除 2*startX 均分)
 @property (nonatomic, assign) CGFloat spaceW;
-
-//偏移量(设置滑动中的效果)
-@property (nonatomic, assign) CGFloat contentOffsetX;
-
-//标记
-//key   标签名字
-//value frame
-@property (nonatomic, strong) NSDictionary *labelTag;
-//标记颜色（默认红色）
-@property (nonatomic, strong) UIColor *tagColor;
-
-//选中线 (默认Size 20,4) 颜色(默认是红)
-@property (nonatomic, strong) UIView *currentLine;
-
-//下方分割线颜色(默认 237，237，237)
-@property (nonatomic, strong) UIView *line;
 
 //标签宽度(可以不设置自适应)
 @property (nonatomic, assign) CGFloat labelW;
@@ -63,10 +58,28 @@ typedef enum : NSUInteger {
 //标签未选中颜色(默认是黑色 0.3)
 @property (nonatomic, strong) UIColor *uncheckColor;
 
-//回调(标签点击回调)
-@property (nonatomic, copy) void(^pageViewBlock)(SHLabelPageView *pageView);
+#pragma mark 其他功能定制
+#pragma mark 标记
+//key   标签位置
+//value frame
+@property (nonatomic, strong) NSDictionary *labelTag;
+//标记颜色（默认红色）
+@property (nonatomic, strong) UIColor *tagColor;
 
-//刷新
+#pragma mark 选中线
+//选中线 Y
+@property (nonatomic, assign) CGFloat currentLineY;
+//选中线 size(默认 文字宽度, 4)
+@property (nonatomic, assign) CGSize currentLineSize;
+//选中线 多出间隙(未设置宽度 currentLineSize.width 时需要多余的间隙 如果设置了宽度则 此属性失效)
+@property (nonatomic, assign) CGFloat currentLineMargin;
+
+//选中线 弧度(默认 2)
+@property (nonatomic, assign) CGFloat currentLineRadius;
+//选中线 color(默认 redColor)
+@property (nonatomic, strong) UIColor *currentLineColor;
+
+#pragma mark 刷新
 - (void)reloadView;
 
 @end

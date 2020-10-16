@@ -6,11 +6,9 @@
  * file that was distributed with this source code.
  */
 
-#import "SDWebImageCompat.h"
-#import "SDImageGIFCoder.h"
+#import "SDWebImageOperation.h"
 
-@interface SDImageGIFCoder ()
-
-- (float)sd_frameDurationAtIndex:(NSUInteger)index source:(nonnull CGImageSourceRef)source;
+/// NSOperation conform to `SDWebImageOperation`.
+@implementation NSOperation (SDWebImageOperation)
 
 @end

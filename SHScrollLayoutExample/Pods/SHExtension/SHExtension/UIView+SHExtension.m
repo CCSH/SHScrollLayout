@@ -205,7 +205,7 @@
 }
 
 #pragma mark 阴影颜色
-- (void)shadowColor:(UIColor *)shadowColor{
+- (void)setShadowColor:(UIColor *)shadowColor{
     self.layer.shadowColor = shadowColor.CGColor;
 }
 

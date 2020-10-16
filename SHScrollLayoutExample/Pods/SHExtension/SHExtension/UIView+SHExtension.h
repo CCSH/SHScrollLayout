@@ -55,6 +55,7 @@ IBInspectable
 @property (nonatomic, strong)IBInspectable UIColor *borderColor;
 //剪切
 @property (nonatomic, assign)IBInspectable BOOL masksToBounds;
+//阴影相关
 //阴影颜色
 @property (nonatomic, strong)IBInspectable UIColor *shadowColor;
 //阴影偏移
