@@ -14,15 +14,12 @@
 @property (nonatomic, assign) NSInteger section;
 //头部悬停位置
 @property (nonatomic, assign) CGFloat headPosition;
-//子视图集合(主要为了控制主视图可以滚动时 子视图全部滚动到顶部) 想自己控制的可以不设置
+//内容高度
+@property (nonatomic, assign) CGFloat contentH;
+//子视图集合
 @property (nonatomic, copy) NSArray <UIScrollView *>*scrollViews;
 
-//处理主视图滑动(在整体滑动中
-//添加在主视图 scrollViewDidScroll
-- (void)handleMainScroll;
-
-//处理子视图滑动(在内容滑动中
-//添加在子视图 scrollViewDidScroll
-- (void)handleChildScrollWithScroll:(UIScrollView *)scroll;
+//处理视图滑动(主视图与子视图 内部有默认处理，如果在其他地方有此代理方法则主动运行此方法)
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 
 @end

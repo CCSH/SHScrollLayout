@@ -41,7 +41,7 @@
     return _tableView;
 }
 
-#pragma mark UITableView
+#pragma mark - UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -63,15 +63,6 @@
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%ld--%ld",(long)self.view.tag,(long)indexPath.row];
     return cell;
-}
-
-#pragma mark - 主要方法
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-     //处理内容滑动
-    if ([scrollView isEqual:self.tableView]) {
-        [self.mainTableView handleChildScrollWithScroll:self.tableView];
-    }
 }
 
 @end

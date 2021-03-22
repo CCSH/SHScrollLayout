@@ -13,8 +13,8 @@
 		5CB37F3D2174610B00D8219E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CB37F3C2174610B00D8219E /* Assets.xcassets */; };
 		5CB37F402174610B00D8219E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CB37F3E2174610B00D8219E /* LaunchScreen.storyboard */; };
 		5CB37F432174610B00D8219E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB37F422174610B00D8219E /* main.m */; };
-		5CB37FE2217462DA00D8219E /* SHTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB37FCC217462DA00D8219E /* SHTableView.m */; };
 		5CB37FE3217462DA00D8219E /* SHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5CB37FCD217462DA00D8219E /* SHViewController.m */; };
+		837D9C2526082DE000FA0CB8 /* SHTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 837D9C2426082DE000FA0CB8 /* SHTableView.m */; };
 		BE6B2AF77EC8D2DD0E996274 /* Pods_SHScrollLayoutExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF305B375FE7062B50069F19 /* Pods_SHScrollLayoutExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,11 +48,11 @@
 		5CB37F422174610B00D8219E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5CB37F482174610B00D8219E /* SHScrollLayoutExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SHScrollLayoutExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CB37F532174610C00D8219E /* SHScrollLayoutExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SHScrollLayoutExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CB37FCB217462DA00D8219E /* SHTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHTableView.h; sourceTree = "<group>"; };
-		5CB37FCC217462DA00D8219E /* SHTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHTableView.m; sourceTree = "<group>"; };
 		5CB37FCD217462DA00D8219E /* SHViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHViewController.m; sourceTree = "<group>"; };
 		5CB37FCE217462DA00D8219E /* SHViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHViewController.h; sourceTree = "<group>"; };
 		647E85938EF94C2F2828BBE1 /* Pods-SHScrollLayoutExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SHScrollLayoutExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample.release.xcconfig"; sourceTree = "<group>"; };
+		837D9C2326082DE000FA0CB8 /* SHTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHTableView.h; sourceTree = "<group>"; };
+		837D9C2426082DE000FA0CB8 /* SHTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHTableView.m; sourceTree = "<group>"; };
 		869A4B72A40382ED30CCA9B8 /* Pods-SHScrollLayoutExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SHScrollLayoutExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SHScrollLayoutExample/Pods-SHScrollLayoutExample.debug.xcconfig"; sourceTree = "<group>"; };
 		CF305B375FE7062B50069F19 /* Pods_SHScrollLayoutExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SHScrollLayoutExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -115,7 +115,7 @@
 		5CB37F322174610A00D8219E /* SHScrollLayoutExample */ = {
 			isa = PBXGroup;
 			children = (
-				5CB37FCA217462DA00D8219E /* SHScrollLayout */,
+				837D9C2226082DE000FA0CB8 /* SHScrollLayout */,
 				5CB37F332174610A00D8219E /* AppDelegate.h */,
 				5CB37F342174610A00D8219E /* AppDelegate.m */,
 				5CB37F362174610A00D8219E /* ViewController.h */,
@@ -131,13 +131,14 @@
 			path = SHScrollLayoutExample;
 			sourceTree = "<group>";
 		};
-		5CB37FCA217462DA00D8219E /* SHScrollLayout */ = {
+		837D9C2226082DE000FA0CB8 /* SHScrollLayout */ = {
 			isa = PBXGroup;
 			children = (
-				5CB37FCB217462DA00D8219E /* SHTableView.h */,
-				5CB37FCC217462DA00D8219E /* SHTableView.m */,
+				837D9C2326082DE000FA0CB8 /* SHTableView.h */,
+				837D9C2426082DE000FA0CB8 /* SHTableView.m */,
 			);
-			path = SHScrollLayout;
+			name = SHScrollLayout;
+			path = ../../SHScrollLayout;
 			sourceTree = "<group>";
 		};
 		B84D288926936D799A6BEF30 /* Frameworks */ = {
@@ -318,10 +319,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				837D9C2526082DE000FA0CB8 /* SHTableView.m in Sources */,
 				5CB37FE3217462DA00D8219E /* SHViewController.m in Sources */,
 				5CB37F382174610A00D8219E /* ViewController.m in Sources */,
 				5CB37F432174610B00D8219E /* main.m in Sources */,
-				5CB37FE2217462DA00D8219E /* SHTableView.m in Sources */,
 				5CB37F352174610A00D8219E /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

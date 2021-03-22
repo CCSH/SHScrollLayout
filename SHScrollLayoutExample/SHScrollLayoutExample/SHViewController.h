@@ -17,7 +17,4 @@
 //内容
 @property (nonatomic, strong) UITableView *tableView;
 
-//主tableview
-@property (nonatomic, strong) SHTableView *mainTableView;
-
 @end

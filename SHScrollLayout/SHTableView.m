@@ -8,9 +8,7 @@
 
 #import "SHTableView.h"
 
-#define kSHContentScrollTop @"SHContentScrollTop"
-
-@interface SHTableView ()<UIGestureRecognizerDelegate>
+@interface SHTableView ()<UIGestureRecognizerDelegate,UIScrollViewDelegate>
 
 //主视图是否可以滚动(子视图与它相反)
 @property (nonatomic, assign) BOOL canScroll;
@@ -72,52 +70,66 @@
     self.isUpdate = YES;
 }
 
+- (void)setScrollViews:(NSArray<UIScrollView *> *)scrollViews{
+    _scrollViews = scrollViews;
+    for (UIScrollView *scroll in self.scrollViews) {
+        scroll.delegate = self;
+    }
+}
+
+- (void)setContentH:(CGFloat)contentH{
+    _contentH = contentH;
+    for (UIScrollView *scroll in self.scrollViews) {
+        CGRect frame = scroll.frame;
+        frame.size.height = self.contentH;
+        scroll.frame = frame;
+    }
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    [self configData];
+    
+    if ([scrollView isEqual:self]) {
+        //主视图滚动
+          if (self.canScroll) {//可以滚动
+              //主视图到达指定位置,主视图不可滚动
+              if (self.contentOffset.y >= self.location) {
+                  //告诉 子视图可以滚动了
+                  self.canScroll = NO;
+              }
+              
+          }else{//不可滚动
+              //手动设置位置
+              self.contentOffset = CGPointMake(0, self.location);
+          }
+    }else{
+        //子视图滚动
+        if (!self.canScroll) {//可以滚动
+            //子视图到达顶部,子视图不可滚动
+            if (scrollView.contentOffset.y <= 0) {
+                //告诉 主视图可以滚动了
+                self.canScroll = YES;
+            }
+            
+        }else{//不可以滚动
+            
+            //虽然 主视图可以滚动，但是 主视图设置了不能滚动 并且 已经达到位置了
+            if (!self.bounces && (self.contentOffset.y == 0 || self.contentOffset.y == self.location)) {
+                //子视图滚动
+                
+            }else{
+                //手动设置位置
+                scrollView.contentOffset = CGPointZero;
+            }
+        }
+    }
+}
+
 #pragma mark - 多手势处理
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return YES;
-}
-
-#pragma mark - 处理主视图滑动数据
-- (void)handleMainScroll{
-    
-    [self configData];
-  
-    if (self.canScroll) {//可以滚动
-        //主视图到达指定位置,主视图不可滚动
-        if (self.contentOffset.y >= self.location) {
-            //告诉 子视图可以滚动了
-            self.canScroll = NO;
-        }
-        
-    }else{//不可滚动
-        //手动设置位置
-        self.contentOffset = CGPointMake(0, self.location);
-    }
-}
-
-#pragma mark - 处理子视图滑动数据
-- (void)handleChildScrollWithScroll:(UIScrollView *)scroll{
-
-    [self configData];
-    
-    if (!self.canScroll) {//可以滚动
-        //子视图到达顶部,子视图不可滚动
-        if (scroll.contentOffset.y <= 0) {
-            //告诉 主视图可以滚动了
-            self.canScroll = YES;
-        }
-        
-    }else{//不可以滚动
-        
-        //虽然 主视图可以滚动，但是 主视图设置了不能滚动 并且 已经达到位置了
-        if (!self.bounces && (self.contentOffset.y == 0 || self.contentOffset.y == self.location)) {
-            //子视图滚动
-            
-        }else{
-            //手动设置位置
-            scroll.contentOffset = CGPointZero;
-        }
-    }
 }
 
 @end
