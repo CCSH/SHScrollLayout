@@ -40,12 +40,27 @@ IBInspectable
 @property (nonatomic, assign) CGSize size;
 
 //获取控制器
-@property (nullable, nonatomic, readonly) UIViewController *sh_vc;
+@property (nonatomic, strong, readonly) UIViewController *sh_vc;
+//视图生成图片
+@property (nonatomic, strong, readonly) UIImage *sh_img;
+//拖拽
+@property (nonatomic, assign) UIEdgeInsets dragEdge;
+
 
 #pragma mark - 描边
 - (void)borderRadius:(CGFloat)radius width:(CGFloat)width color:(UIColor *)color;
+- (void)borderRadius:(CGFloat)radius corners:(UIRectCorner)corners;
+
+#pragma mark - 获取一个渐变色的视图
++ (UIView *)getGradientViewWithSize:(CGSize)size startPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint colorArr:(NSArray *)colorArr;
+
+#pragma mark 按照图片裁剪视图
+- (void)makeMaskViewWithImage:(UIImage *)image;
 
 #pragma mark - xib 属性
+//加载xib
++ (instancetype)loadXib;
+
 // 注意: 加上IBInspectable就可以可视化显示相关的属性
 //圆角弧度
 @property (nonatomic, assign)IBInspectable CGFloat cornerRadius;

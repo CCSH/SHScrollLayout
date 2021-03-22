@@ -13,14 +13,14 @@
 //标签滚动视图
 @property (nonatomic, strong) UIScrollView *pageScroll;
 //选中线
-@property (nonatomic, strong) UIView *currentLine;
+@property (nonatomic, strong) UIImageView *currentLine;
 
 @end
 
 @implementation SHLabelPageView
 
 //标签tag
-static NSInteger labTag = 10000000000;
+static NSInteger labTag = 1000000;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -31,6 +31,7 @@ static NSInteger labTag = 10000000000;
         self.checkColor = nil;
         self.uncheckColor = nil;
         self.currentLineColor = nil;
+        self.labelH = 40;
     }
     return self;
 }
@@ -54,6 +55,11 @@ static NSInteger labTag = 10000000000;
 - (void)setContentOffsetX:(CGFloat)contentOffsetX {
     _contentOffsetX = contentOffsetX;
 
+    //竖直布局不生效
+    if (self.directione == SHLabelPageDirectione_hor) {
+        return;
+    }
+    
     if (contentOffsetX == self.index) { //已经设置完毕 -> 界面滚动 -> 触发本方法
         return;
     }
@@ -174,7 +180,17 @@ static NSInteger labTag = 10000000000;
 
 - (void)setCurrentLineY:(CGFloat)currentLineY {
     _currentLineY = currentLineY;
+    //竖直布局不生效
+    if (self.directione == SHLabelPageDirectione_hor)
+    {
+        return;
+    }
     self.currentLine.y = currentLineY;
+}
+
+- (void)setCurrentImg:(UIImage *)currentImg{
+    _currentImg = currentImg;
+    self.currentLine.image = currentImg;
 }
 
 - (void)setCurrentLineSize:(CGSize)currentLineSize {
@@ -232,24 +248,116 @@ static NSInteger labTag = 10000000000;
 
 #pragma mark 配置UI
 - (void)configUI {
+    
     //设置滚动大小
     self.pageScroll.size = self.size;
-
+    
+    
     [self.currentLine removeFromSuperview];
     [self.pageScroll addSubview:self.currentLine];
 
-    //设置标签
-    CGFloat view_h = self.pageScroll.height;
-
-    //间隔
-    __block CGFloat view_x = self.startX;
-    __block CGFloat view_start = 0;
-    __block CGFloat contentSetX = 0;
-
-    if (self.type == SHLabelPageType_one) {
-        view_start = (self.width - 2 * self.startX) / (self.pageList.count + 1);
+    //设置内容
+    switch (self.directione)
+    {
+        case SHLabelPageDirectione_hor: //竖直布局
+        {
+            [self configUIhor];
+        }
+            break;
+        default:
+        {
+            //默认水平布局
+            [self configUIver];
+        }
+            break;
     }
 
+
+    //刷新界面
+    [self reloadPage];
+}
+
+#pragma mark 水平布局
+- (void)configUIver{
+    //设置标签
+       CGFloat view_h = self.pageScroll.height;
+
+       //间隔
+       __block CGFloat view_x = self.startX;
+       __block CGFloat view_start = 0;
+       __block CGFloat contentSetX = 0;
+
+       if (self.type == SHLabelPageType_one) {
+           view_start = (self.width - 2 * self.startX) / (self.pageList.count + 1);
+       }
+
+       //设置内容
+       [self.pageList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *_Nonnull stop) {
+
+           //设置标签
+           UIButton *btn = [self getChannelLab];
+           [btn setTitle:obj forState:0];
+           btn.tag = labTag + idx;
+
+           //设置了宽度就用、没设置用自适应
+           if (self.labelW) {
+               btn.frame = CGRectMake(view_x, 0, self.labelW, view_h);
+           } else {
+               btn.frame = CGRectMake(view_x, 0, [self getChannelWithText:obj], view_h);
+           }
+
+           //设置frame
+           switch (self.type) {
+               case SHLabelPageType_one: //一页
+               {
+                   //设置了间距
+                   if (self.spaceW) {
+                       if (idx == 0) { //第一个
+                           btn.x = 0;
+                       }
+                       if (idx == self.pageList.count - 1) { //最后一个
+                           //计算位置
+                           contentSetX = (self.width - btn.maxX) / 2;
+                       }
+                   } else { //没有设置间距
+
+                       btn.centerX = self.startX + ((idx + 1) * view_start);
+                   }
+               } break;
+               default:
+                   break;
+           }
+
+           view_x += btn.width + self.spaceW;
+
+           [self.pageScroll addSubview:btn];
+
+           NSString *key = [NSString stringWithFormat:@"%lu", (unsigned long)idx];
+           CGRect frame = [self.labelTag[key] CGRectValue];
+           //是否存在标记
+           if (frame.size.height) {
+               //添加标记
+               CALayer *layer = [CALayer layer];
+               layer.frame = frame;
+               layer.cornerRadius = frame.size.height / 2;
+               layer.backgroundColor = self.tagColor.CGColor;
+               [btn.layer addSublayer:layer];
+           }
+       }];
+
+       if (contentSetX) {
+           self.pageScroll.contentSize = CGSizeMake(view_x - self.spaceW, 0);
+           self.pageScroll.x = contentSetX;
+       } else {
+           self.pageScroll.contentSize = CGSizeMake(view_x, 0);
+       }
+}
+
+#pragma mark 竖直布局
+- (void)configUIhor{
+    
+    self.currentLine.origin = CGPointZero;
+    __block CGFloat view_y = 0;
     //设置内容
     [self.pageList enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *_Nonnull stop) {
 
@@ -257,68 +365,24 @@ static NSInteger labTag = 10000000000;
         UIButton *btn = [self getChannelLab];
         [btn setTitle:obj forState:0];
         btn.tag = labTag + idx;
-
-        //设置了宽度就用、没设置用自适应
-        if (self.labelW) {
-            btn.frame = CGRectMake(view_x, 0, self.labelW, view_h);
-        } else {
-            btn.frame = CGRectMake(view_x, 0, [self getChannelWithText:obj], view_h);
-        }
-
-        //设置frame
-        switch (self.type) {
-            case SHLabelPageType_one: //一页
-            {
-                //设置了间距
-                if (self.spaceW) {
-                    if (idx == 0) { //第一个
-                        btn.x = 0;
-                    }
-                    if (idx == self.pageList.count - 1) { //最后一个
-                        //计算位置
-                        contentSetX = (self.width - btn.maxX) / 2;
-                    }
-                } else { //没有设置间距
-
-                    btn.centerX = self.startX + ((idx + 1) * view_start);
-                }
-            } break;
-            default:
-                break;
-        }
-
-        view_x += btn.width + self.spaceW;
+        btn.origin = CGPointMake(0, view_y);
+        btn.size = CGSizeMake(self.pageScroll.width, self.labelH);
+        view_y = btn.maxY;
 
         [self.pageScroll addSubview:btn];
-
-        NSString *key = [NSString stringWithFormat:@"%lu", (unsigned long)idx];
-        CGRect frame = [self.labelTag[key] CGRectValue];
-        //是否存在标记
-        if (frame.size.height) {
-            //添加标记
-            CALayer *layer = [CALayer layer];
-            layer.frame = frame;
-            layer.cornerRadius = frame.size.height / 2;
-            layer.backgroundColor = self.tagColor.CGColor;
-            [btn.layer addSublayer:layer];
-        }
     }];
+    
+    self.pageScroll.contentSize = CGSizeMake(0, view_y);
+    self.pageScroll.clipsToBounds = YES;
 
-    if (contentSetX) {
-        self.pageScroll.contentSize = CGSizeMake(view_x - self.spaceW, 0);
-        self.pageScroll.x = contentSetX;
-    } else {
-        self.pageScroll.contentSize = CGSizeMake(view_x, 0);
-    }
-
-    //刷新界面
-    [self reloadPage];
 }
+    
 
 #pragma mark 获取标签
 - (UIButton *)getChannelLab {
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.titleLabel.font = self.fontSize;
+    btn.backgroundColor = [UIColor clearColor];
 
     [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -352,10 +416,23 @@ static NSInteger labTag = 10000000000;
             btn.titleLabel.font = self.unFontSize;
         }
     }
+    
+    //处理布局
+    switch (self.directione) {
+        case SHLabelPageDirectione_hor://垂直
+            [self handlePagehor];
+            break;
+        default:
+            [self handlePagever];
+            break;
+    }
+    
+}
 
+#pragma mark 处理水平
+- (void)handlePagever{
     //取出当前的标签
     UIButton *currentBtn = [self.pageScroll viewWithTag:self.index + labTag];
-
     CGFloat lineW = self.currentLineSize.width ?: (currentBtn.width + self.currentLineMargin);
 
     if (self.type == SHLabelPageType_more) { //多个标签情况
@@ -366,16 +443,8 @@ static NSInteger labTag = 10000000000;
         if (offsetMaxX < 0) { //不足一屏幕则不进行处理
             return;
         }
-
-        //最右边
-        if (offsetX > offsetMaxX) {
-            offsetX = offsetMaxX;
-        }
-
-        //最左边
-        if (offsetX < 0) {
-            offsetX = 0;
-        }
+        
+        offsetX= MAX(0, MIN(offsetX, offsetMaxX));
 
         //滚动
         [self.pageScroll setContentOffset:CGPointMake(offsetX, 0) animated:YES];
@@ -394,6 +463,32 @@ static NSInteger labTag = 10000000000;
                          currentBtn.titleLabel.font = self.fontSize;
 
                      }];
+}
+
+#pragma mark 处理竖直
+- (void)handlePagehor{
+    //取出当前的标签
+    UIButton *currentBtn = [self.pageScroll viewWithTag:self.index + labTag];
+    //选中颜色
+    [currentBtn setTitleColor:[self getColorWithScale:1] forState:0];
+    //选中字体
+    currentBtn.titleLabel.font = self.fontSize;
+    
+    self.currentLine.centerY = currentBtn.centerY;
+
+    //设置scroll居中
+    CGFloat offsetY = currentBtn.centerY - self.pageScroll.height * 0.5;
+    CGFloat offsetMaxY = self.pageScroll.contentSize.height - self.pageScroll.height;
+    
+    if (offsetMaxY < 0)
+    {
+        return;
+    }
+    
+    offsetY = MAX(0, MIN(offsetY, offsetMaxY));
+
+    //滚动
+    [self.pageScroll setContentOffset:CGPointMake(0, offsetY) animated:YES];
 }
 
 #pragma mark 获取颜色RGB
@@ -458,12 +553,13 @@ static NSInteger labTag = 10000000000;
 }
 
 //当前点击的线
-- (UIView *)currentLine{
+- (UIImageView *)currentLine{
     if (!_currentLine) {
-        _currentLine = [[UIView alloc]init];
+        _currentLine = [[UIImageView alloc]init];
         _currentLine.height = 4;
         _currentLine.layer.cornerRadius = _currentLine.height/2;
         _currentLine.layer.masksToBounds = YES;
+        _currentLine.contentMode = UIViewContentModeScaleAspectFit;
     }
     return _currentLine;
 }

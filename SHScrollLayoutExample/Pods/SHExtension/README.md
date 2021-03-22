@@ -1,6 +1,7 @@
 # SHExtension
 常用类别方法，拓展
 # 使用 pod 导入
+[![Pod Version](http://img.shields.io/cocoapods/v/SHExtension.svg?style=flat)](http://cocoadocs.org/docsets/SHExtension/)
 ```
 pod 'SHExtension'
 ```

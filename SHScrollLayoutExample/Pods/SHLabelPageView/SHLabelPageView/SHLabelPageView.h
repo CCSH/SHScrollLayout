@@ -16,6 +16,12 @@ typedef enum : NSUInteger {
     SHLabelPageType_one,    //一页(标签居中)
 } SHLabelPageType;
 
+//滚动方向
+typedef enum : NSUInteger {
+    SHLabelPageDirectione_ver,   //水平滚动
+    SHLabelPageDirectione_hor,   //竖直滚动
+} SHLabelPageDirectione;
+
 /**
  标签页
  */
@@ -69,6 +75,8 @@ typedef enum : NSUInteger {
 #pragma mark 选中线
 //选中线 Y
 @property (nonatomic, assign) CGFloat currentLineY;
+//选中线图片
+@property (nonatomic, strong) UIImage *currentImg;
 //选中线 size(默认 文字宽度, 4)
 @property (nonatomic, assign) CGSize currentLineSize;
 //选中线 多出间隙(未设置宽度 currentLineSize.width 时需要多余的间隙 如果设置了宽度则 此属性失效)
@@ -78,6 +86,15 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat currentLineRadius;
 //选中线 color(默认 redColor)
 @property (nonatomic, strong) UIColor *currentLineColor;
+
+
+//方向
+@property (nonatomic, assign) SHLabelPageDirectione directione;
+
+#pragma mark 竖直配置(购物类APP分类形式)
+//标签高度(默认40)
+@property (nonatomic, assign) CGFloat labelH;
+
 
 #pragma mark 刷新
 - (void)reloadView;
