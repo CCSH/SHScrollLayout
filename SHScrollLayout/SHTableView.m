@@ -31,7 +31,7 @@
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         }
         //滚动通知
-        [[NSNotificationCenter defaultCenter] addObserverForName:kSHNotScrollViewDidScroll
+        [[NSNotificationCenter defaultCenter] addObserverForName:kNotSHScrollLayout
                                                           object:nil
                                                            queue:[NSOperationQueue mainQueue]
                                                       usingBlock:^(NSNotification *_Nonnull note) {

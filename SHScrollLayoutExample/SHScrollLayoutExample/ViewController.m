@@ -144,7 +144,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSHNotScrollViewDidScroll object:scrollView];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotSHScrollLayout object:scrollView];
 }
 
 #pragma mark 懒加载

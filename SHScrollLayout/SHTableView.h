@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#define kSHNotScrollViewDidScroll @"kSHNotScrollViewDidScroll"
+#define kNotSHScrollLayout @"kNotSHScrollLayout"
 
 
 @interface SHTableView : UITableView

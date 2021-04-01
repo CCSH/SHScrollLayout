@@ -66,7 +66,7 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSHNotScrollViewDidScroll object:scrollView];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kNotSHScrollLayout object:scrollView];
 }
 
 @end
