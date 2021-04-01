@@ -26,6 +26,8 @@
     if (self) {
         //默认主视图可以滚动
         self.canScroll = YES;
+        //计算一下
+        self.isUpdate = YES;
         
         if (@available(iOS 11.0, *)) {
             self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
