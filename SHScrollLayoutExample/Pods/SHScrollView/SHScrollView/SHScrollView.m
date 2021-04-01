@@ -7,7 +7,7 @@
 //
 
 #import "SHScrollView.h"
-#import <UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 @interface SHScrollView () <UICollectionViewDataSource, UICollectionViewDelegate>
 

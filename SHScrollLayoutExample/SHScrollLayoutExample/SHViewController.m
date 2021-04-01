@@ -48,11 +48,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 50 + arc4random()%10;
+    return 30 + arc4random()%10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -63,6 +63,10 @@
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%ld--%ld",(long)self.view.tag,(long)indexPath.row];
     return cell;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSHNotScrollViewDidScroll object:scrollView];
 }
 
 @end

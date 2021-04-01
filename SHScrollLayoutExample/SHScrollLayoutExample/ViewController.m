@@ -52,7 +52,7 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     // Do any additional setup after loading the view, typically from a nib.
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.tableView.contentH = self.tableView.height - self.tableView.headPosition - self.pageView.height;
+    self.tableView.contentH = self.tableView.height - self.tableView.sectionY - self.pageView.height;
     
     //设置数据源
     [self configData];
@@ -142,10 +142,9 @@ __strong __typeof__(VAR) VAR = weak_##VAR
     }
 }
 
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    //处理整体滑动数据
-    [self.tableView scrollViewDidScroll:scrollView];
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSHNotScrollViewDidScroll object:scrollView];
 }
 
 #pragma mark 懒加载
@@ -162,10 +161,10 @@ __strong __typeof__(VAR) VAR = weak_##VAR
         // 子刷新 子加载
         _tableView.bounces = NO;
         
-        //需要处理的组
+        //悬停的组
         _tableView.section = 2;
-        //处理组头部悬停位置
-        _tableView.headPosition = 20;
+        //悬停位置
+        _tableView.sectionY = 20;
         
         [self.view addSubview:_tableView];
     }
