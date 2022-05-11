@@ -10,7 +10,7 @@
 ```
 pod 'SHScrollLayout'
 ```
-# 内部使用的组件请 pod 引用最新版本
+# Demo使用的组件请 pod 引用最新版本
 ```
 pod 'SHLabelPageView'
 pod 'SHScrollView'
