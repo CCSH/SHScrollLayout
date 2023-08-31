@@ -15,5 +15,5 @@ pod 'SHScrollLayout'
 pod 'SHLabelPageView'
 pod 'SHScrollView'
 ```
-
+# 效果
 ![image](https://github.com/CCSH/ScrollLayout/blob/master/QQ20180915-144725-HD.gif)
